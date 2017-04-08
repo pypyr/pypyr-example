@@ -1,0 +1,30 @@
+# This is an example showing the anatomy of a pypyr pipeline
+# A pipeline should be saved as {working dir}/pipelines/mypipelinename.yaml.
+# Run the pipeline from {working dir} like this: pypyr --name mypipelinename
+
+# optional
+# A context_parser parses the pypyr --context input argument.
+context_parser: my.custom.parser
+
+# mandatory.
+# steps is a list of things to execute in sequence.
+steps:
+  - my.package.my.module # simple step pointing at a python module in a package
+  - mymodule # simple step pointing at a python file
+  - name: my.package.another.module # complex step. It contains a description and in parameters.
+    description: Description is for humans. It's any text that makes your life easier.
+    in: #optional. In parameters are added to the context so that this step and subsequent steps can use these key-value pairs.
+      parameter1: value1
+      parameter2: value2
+
+# optional. Runs when steps: completes successfully
+# on_success is a list of thing to execute in sequence.
+on_success:
+  - my.first.success.step
+  - my.second.success.step
+
+# optional. Runs when any of the above hits an unhandled exception
+# on_failure is a list of thing to execute in sequence.
+on_failure:
+  - my.failure.handler.step
+  - my.failure.handler.notifier
