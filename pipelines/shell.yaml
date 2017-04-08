@@ -1,0 +1,14 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr --name shell --log 20
+  steps:
+    - name: pypyr.steps.safeshell
+      description: runs safe cmd in shell
+      in:
+        cmd: ls -a
+    - name: pypyr.steps.shell
+      in:
+        cmd: ls | grep pipe; echo if you had something pipey it should show up;
+    - name: pypyr.steps.shell
+      description: runs dangerous cmd in shell and raises deliberate error.
+      in:
+        cmd: uname; exit 1;
