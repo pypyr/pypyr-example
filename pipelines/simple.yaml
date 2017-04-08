@@ -1,6 +1,6 @@
-# To execute this pipeline, shell something like:
+# To execute this pipeline, from repo directory shell something like:
 # pypyr --name simple --log 20
 steps:
   - pypyr.steps.pypyrversion # this is a built-in pypyr step
-  - mypythonpackage.mycustomstep1 # this is a custom step inside a python package in this repo - see steps/mycustomstep1.py
+  - mypythonpackage.mycustomstep1 # this is a custom step inside a python package in this repo - see mypythonpackage/mycustomstep1.py
   - arbstep # this is a custom step that's just an arbitrary .py file (not part of package) - see arbstep.py
