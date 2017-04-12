@@ -20,4 +20,3 @@ def run_step(context):
     logger.info("you prob want to do something useful here. . .")
 
     logger.debug("done")
-    return context

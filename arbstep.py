@@ -16,4 +16,3 @@ def run_step(context):
     logger.info("This is an arbitrary step that isn't in a package.")
 
     logger.debug("done")
-    return context
