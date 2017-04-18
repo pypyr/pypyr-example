@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 def run_step(context):
     """Run code in here. This shows you how to code a custom pipeline step."""
     logger.debug("started")
-    print(logger.getEffectiveLevel())
+
     logger.info("you prob want to do something useful here. . .")
 
     logger.debug("done")
