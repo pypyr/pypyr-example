@@ -1,0 +1,16 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr --name substitutions --context "key1=this is key1 in context,key2=pipe" --log 20
+context_parser: pypyr.context.keyvaluepairs
+steps:
+  - name: pypyr.steps.safeshell
+    description: substitute {key1} and {key2} for their values in context
+    in:
+      cmd: echo {key1} and {key2}
+  - name: pypyr.steps.shell
+    description: substitute {key2} for its value in context
+    in:
+      cmd: ls | grep {key2}; echo if you had something {key2}-ey it should show up;
+  - name: pypyr.steps.safeshell
+    description: escape literal curlies by doubling - output is "{{key1}}"
+    in:
+      cmd: echo {{key1}}
