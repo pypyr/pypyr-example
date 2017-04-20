@@ -14,3 +14,7 @@ steps:
     description: escape literal curlies by doubling - output is "{{key1}}"
     in:
       cmd: echo {{key1}}
+  - name: pypyr.steps.shell
+    description: substitute ENV variables with double braces, or just straight-up with $
+    in:
+      cmd: echo this is the env variable $USER - ${{USER}};
