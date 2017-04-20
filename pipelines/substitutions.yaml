@@ -11,7 +11,7 @@ steps:
     in:
       cmd: ls | grep {key2}; echo if you had something {key2}-ey it should show up;
   - name: pypyr.steps.safeshell
-    description: escape literal curlies by doubling - output is "{{key1}}"
+    description: escape literal curlies by doubling - output is "{key1}"
     in:
       cmd: echo {{key1}}
   - name: pypyr.steps.shell
