@@ -2,7 +2,7 @@
 # pypyr --name shell --log 20
   steps:
     - name: pypyr.steps.safeshell
-      description: runs safe cmd in shell
+      description: runs safe cmd - this runs a program with args, but doesn't run it in a shell.
       in:
         cmd: ls -a
     - name: pypyr.steps.shell
