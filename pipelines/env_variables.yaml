@@ -1,0 +1,34 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr --name env_variables --context "key1=value1,key2=value2" --log 20
+context_parser: pypyr.context.keyvaluepairs
+steps:
+  - name: pypyr.steps.envset
+    description: set $ARB_ENV1 and $ARB_ENV2
+    in:
+      envSet:
+        ARB_ENV1: 'key1'
+        ARB_ENV2: 'key2'
+  - name: pypyr.steps.shell
+    description: show the $ARB_ENV1 and $ARB_ENV2 env vars was set by previous step
+    in:
+      cmd: echo env vars ARB_ENV1 $ARB_ENV1 and ARB_ENV2 $ARB_ENV2 was just set by pypyr
+  - name: pypyr.steps.envget
+    description: write $ARB_ENV1 and $ARB_ENV2 into the pypyr context as context1 and context2.
+    in:
+      envGet:
+        context1: ARB_ENV1
+        context2: ARB_ENV2
+  - name: pypyr.steps.py
+    description: show context values that envget got from $ENVs
+    in:
+      pycode: print(f"pypyr context values were set from env vars. {context['context1']} from ARB_ENV1 and {context['context2']} from ARB_ENV2")
+  - name: pypyr.steps.envunset
+    description: unset the $ENVs just created
+    in:
+      envUnset:
+        - ARB_ENV1
+        - ARB_ENV2
+  - name: pypyr.steps.shell
+    description: show the $ARB_ENV1 and $ARB_ENV2 are empty now
+    in:
+      cmd: echo env vars ARB_ENV1 $ARB_ENV1 and ARB_ENV2 $ARB_ENV2 should be empty now.
