@@ -1,6 +1,6 @@
 # To execute this pipeline, from repo directory shell something like:
 # pypyr --name contextset --context invalue='passed from the cmd args' --log 20
-context_parser: pypyr.context.keyvaluepairs
+context_parser: pypyr.parser.keyvaluepairs
 steps:
   - name: pypyr.steps.contextset
     description: set echoMe from the input context value of invalue
