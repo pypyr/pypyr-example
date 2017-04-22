@@ -1,0 +1,9 @@
+echoMe: this text lives inside a yaml file
+key4:
+  k41: k41value
+  k42:
+    - k42list1
+    - k42list2
+    - k42list3
+  k43: True
+  k44: 77

@@ -1,0 +1,18 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr --name yamlfilein --context ./testfiles/sample.yaml --log 20
+context_parser: pypyr.context.yamlfile
+steps:
+  - pypyr.steps.echo # if there's an echoMe in the yaml, it'll echo here.
+  - name: pypyr.steps.py
+    description: use a nested list in the source yaml
+    in:
+      pycode: print(context['key4']['k42'][1])
+  - name: pypyr.steps.py
+    description: type int is parsed as numeric from yaml
+    in:
+      pycode: print(context['key4']['k44'] + 3)
+  - name: pypyr.steps.py
+    description: type int is parsed as numeric from yaml. >- escapes the next line without adding a newline.
+    in:
+      pycode: >-
+            if context['key4']['k43']: print('k43 is true alright')
