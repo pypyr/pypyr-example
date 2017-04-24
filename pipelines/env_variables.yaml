@@ -2,7 +2,7 @@
 # pypyr --name env_variables --context "key1=value1,key2=value2" --log 20
 context_parser: pypyr.parser.keyvaluepairs
 steps:
-  - name: pypyr.steps.envset
+  - name: pypyr.steps.env
     description: set $ARB_ENV1 and $ARB_ENV2
     in:
       envSet:
@@ -12,7 +12,7 @@ steps:
     description: show the $ARB_ENV1 and $ARB_ENV2 env vars was set by previous step
     in:
       cmd: echo env vars ARB_ENV1 $ARB_ENV1 and ARB_ENV2 $ARB_ENV2 was just set by pypyr
-  - name: pypyr.steps.envget
+  - name: pypyr.steps.env
     description: write $ARB_ENV1 and $ARB_ENV2 into the pypyr context as context1 and context2.
     in:
       envGet:
@@ -22,8 +22,11 @@ steps:
     description: show context values that envget got from $ENVs
     in:
       pycode: print(f"pypyr context values were set from env vars. {context['context1']} from ARB_ENV1 and {context['context2']} from ARB_ENV2")
-  - name: pypyr.steps.envunset
-    description: unset the $ENVs just created
+  - name: pypyr.steps.env
+    description: |
+                  unset the $ENVs just created. At this point envSet and envGet
+                  are actually still in context from the previous steps, so this
+                  step will actually do envGet, envSet and then unSet. 
     in:
       envUnset:
         - ARB_ENV1
