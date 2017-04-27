@@ -31,11 +31,11 @@ In the repo root, run:
 .. code-block:: bash
 
   # run the pipelines/simple.yaml pipeline with INFO log level.
-  $ pypyr --name simple --log 20
+  $ pypyr --name simple
 
   # run the pipelines/simple.yaml pipeline with the default DEBUG log level.
   # this will give you all the gory details.
-  $ pypyr --name simple
+  $ pypyr --name simple --log 10
 
 slack
 ------

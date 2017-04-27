@@ -1,5 +1,5 @@
 # To execute this pipeline, from repo directory shell something like:
-# pypyr --name shell --log 20
+# pypyr --name shell
   steps:
     - name: pypyr.steps.safeshell
       description: runs safe cmd - this runs a program with args, but doesn't run it in a shell.

@@ -1,5 +1,5 @@
 # To execute this pipeline, from repo directory shell something like:
-# pypyr --name env_variables --context "key1=value1,key2=value2" --log 20
+# pypyr --name env_variables --context "key1=value1,key2=value2"
 context_parser: pypyr.parser.keyvaluepairs
 steps:
   - name: pypyr.steps.env
@@ -26,7 +26,7 @@ steps:
     description: |
                   unset the $ENVs just created. At this point envSet and envGet
                   are actually still in context from the previous steps, so this
-                  step will actually do envGet, envSet and then unSet. 
+                  step will actually do envGet, envSet and then unSet.
     in:
       envUnset:
         - ARB_ENV1
