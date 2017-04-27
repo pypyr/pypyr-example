@@ -1,5 +1,5 @@
 # To execute this pipeline, from repo directory shell something like:
-# pypyr --name substitutions --context "key1=this is key1 in context,key2=pipe"
+# pypyr substitutions --context "key1=this is key1 in context,key2=pipe"
 context_parser: pypyr.parser.keyvaluepairs
 steps:
   - name: pypyr.steps.safeshell

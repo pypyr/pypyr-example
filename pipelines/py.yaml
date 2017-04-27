@@ -1,5 +1,5 @@
 # To execute this pipeline, from repo directory shell something like:
-# pypyr --name py
+# pypyr py
   steps:
     - name: pypyr.steps.py
       description: runs arb python

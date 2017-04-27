@@ -1,5 +1,5 @@
 # To execute this pipeline, from repo directory shell something like:
-# pypyr --name yamlfilein --context ./testfiles/sample.yaml
+# pypyr yamlfilein --context ./testfiles/sample.yaml
 context_parser: pypyr.parser.yamlfile
 steps:
   - pypyr.steps.echo # if there's an echoMe in the yaml, it'll echo here.

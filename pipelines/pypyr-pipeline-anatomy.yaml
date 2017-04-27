@@ -1,6 +1,6 @@
 # This is an example showing the anatomy of a pypyr pipeline
 # A pipeline should be saved as {working dir}/pipelines/mypipelinename.yaml.
-# Run the pipeline from {working dir} like this: pypyr --name mypipelinename
+# Run the pipeline from {working dir} like this: pypyr mypipelinename
 # Don't run this, it's just an example. The modules don't exist.
 
 # optional
