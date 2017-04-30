@@ -1,0 +1,27 @@
+# WARNING: Will be working with ./out dir - if you have anything in there you
+# want to keep or not potentially overwrite, don't run this.
+# To execute this pipeline, from repo directory shell something like:
+# pypyr tar --context fileName='myarchive'
+context_parser: pypyr.parser.keyvaluepairs
+steps:
+  - name: pypyr.steps.shell
+    description: archive examples to out, extract sample archives to out/originals
+    in:
+      cmd: mkdir out out/originals || true
+  - name: pypyr.steps.tar
+    description: default uses xz. you can test your archive with "cd out; tar xf testfile.tar.xz"
+    in:
+      tarArchive:
+        testfiles: out/testfile.tar.xz
+  - name: pypyr.steps.tar
+    in:
+      tarArchive:
+      tarExtract:
+        ./out/testfile.tar.xz: out/originals
+  - name: pypyr.steps.tar
+    description: use gz and get fileName from context
+    in:
+      tarFormat: gz
+      tarExtract:
+      tarArchive:
+        ./testfiles: out/{fileName}.tar.gz
