@@ -13,15 +13,21 @@ steps:
     in:
       tarArchive:
         testfiles: out/testfile.tar.xz
+  - name: pypyr.steps.contextclear
+    in:
+      contextClear:
+        - tarArchive
   - name: pypyr.steps.tar
     in:
-      tarArchive:
       tarExtract:
         ./out/testfile.tar.xz: out/originals
+  - name: pypyr.steps.contextclear
+    in:
+      contextClear:
+        - tarExtract
   - name: pypyr.steps.tar
     description: use gz and get fileName from context
     in:
       tarFormat: gz
-      tarExtract:
       tarArchive:
         ./testfiles: out/{fileName}.tar.gz
