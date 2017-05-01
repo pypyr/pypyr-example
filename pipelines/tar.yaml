@@ -12,7 +12,8 @@ steps:
     description: default uses xz. you can test your archive with "cd out; tar xf testfile.tar.xz"
     in:
       tarArchive:
-        testfiles: out/testfile.tar.xz
+        - in: testfiles
+          out: out/testfile.tar.xz
   - name: pypyr.steps.contextclear
     in:
       contextClear:
@@ -20,7 +21,8 @@ steps:
   - name: pypyr.steps.tar
     in:
       tarExtract:
-        ./out/testfile.tar.xz: out/originals
+        - in: ./out/testfile.tar.xz
+          out: out/originals
   - name: pypyr.steps.contextclear
     in:
       contextClear:
@@ -30,4 +32,14 @@ steps:
     in:
       tarFormat: gz
       tarArchive:
-        ./testfiles: out/{fileName}.tar.gz
+        - in: ./testfiles
+          out: out/{fileName}.tar.gz
+  - name: pypyr.steps.tar
+    description: use plain tar (no compression)
+    in:
+      tarFormat: ''
+      tarArchive:
+        - in: ./testfiles
+          out: out/plainole.tar
+        - in: ./LICENSE
+          out: out/singlefile.tar

@@ -87,3 +87,6 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# arb out dir, as used by tar.yaml
+out/
