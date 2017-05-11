@@ -1,0 +1,30 @@
+# this is configuration yaml to register and run an ecs task in pypyr.
+# See pipelines/aws-ecs.yaml
+helloTaskRegister:
+  serviceName: ecs
+  methodName: register_task_definition
+  methodArgs:
+    family: pypyr-test-task-definition
+    containerDefinitions:
+      - name: pypyr-hello-world
+        image: alpine
+        memory: 128
+        # portMappings et. likely to go here also on less trivial examples
+helloTaskRun:
+  serviceName: ecs
+  methodName: run_task
+  methodArgs:
+    cluster: ecs-cloco-stage-cd-cluster
+    taskDefinition: pypyr-test-task-definition
+    overrides:
+      containerOverrides:
+        - name: pypyr-hello-world
+          command:
+            - /bin/sh
+            - '-c'
+            - echo 'waiting 60s'; sleep 60; echo 'done waiting'; return 0;
+    count: 1
+    startedBy: pypyr
+helloWaiter:
+  serviceName: ecs
+  waiterName: tasks_stopped

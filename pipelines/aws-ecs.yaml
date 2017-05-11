@@ -1,0 +1,27 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr aws-ecs --context ./input/aws-ecs.yaml
+# There's no real need to put the context config in a separate yaml, but in the
+# case of ecs where task definitions can take a lot of config, it's sort of
+# handy to keep it in its own yaml file. You can pretty much poach the boto3
+# docs request samples directly for the appropriate yaml structure, which makes
+# it nice and easy.
+context_parser: pypyr.parser.yamlfile
+steps:
+  - name: pypyr.steps.contextset
+    in:
+      contextSet:
+        awsClientIn: helloTaskRegister
+  - name: pypyraws.steps.client
+    description: register task definition - will run config from helloTaskRegister in input yaml
+  - name: pypyr.steps.contextset
+    in:
+      contextSet:
+        awsClientIn: helloTaskRun
+        awsWaitIn: helloWaiter
+  - name: pypyraws.steps.client
+    description: since awsClientIn is the contents of helloTaskRun now, will run the task def.
+  - pypyraws.steps.ecswaitprep
+  - pypyraws.steps.wait
+  - name: pypyr.steps.echo
+    in:
+      echoMe: container had an arb 60s sleep in it. It's done now.
