@@ -14,7 +14,7 @@ helloTaskRun:
   serviceName: ecs
   methodName: run_task
   methodArgs:
-    cluster: ecs-cloco-stage-cd-cluster
+    cluster: your-cluster-name-here
     taskDefinition: pypyr-test-task-definition
     overrides:
       containerOverrides:
