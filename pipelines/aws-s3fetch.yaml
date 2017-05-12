@@ -1,0 +1,44 @@
+# WARNING: Using aws costs money. This script does not delete any resources it
+# creates - if you don't want surprise bills, you need to delete these yourself.
+# To execute this pipeline, from repo directory shell something like:
+# pypyr aws-s3fetch --context "bucket=myuniquebucketname"
+# Obviously set myuniquebucketname to a bucket to which your user account has
+# write permissions.
+# The echo step in each instance just uses the echoMe value that's set in the
+# json and yaml retrieved from s3.
+context_parser: pypyr.parser.keyvaluepairs
+steps:
+  - name: pypyraws.steps.client
+    description: upload json to s3
+    in:
+      awsClientIn:
+        serviceName: s3
+        methodName: upload_file
+        methodArgs:
+          Filename: ./testfiles/sample.json
+          Bucket: '{bucket}'
+          Key: arb.json
+  - name: pypyraws.steps.s3fetchjson
+    in:
+      s3Fetch:
+        methodArgs:
+          Bucket: '{bucket}'
+          Key: arb.json
+  - pypyr.steps.echo
+  - name: pypyraws.steps.client
+    description: upload yaml to s3
+    in:
+      awsClientIn:
+        serviceName: s3
+        methodName: upload_file
+        methodArgs:
+          Filename: ./testfiles/sample.yaml
+          Bucket: '{bucket}'
+          Key: arb.yaml
+  - name: pypyraws.steps.s3fetchyaml
+    in:
+      s3Fetch:
+        methodArgs:
+          Bucket: '{bucket}'
+          Key: arb.yaml
+  - pypyr.steps.echo

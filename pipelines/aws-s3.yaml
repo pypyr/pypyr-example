@@ -1,3 +1,5 @@
+# WARNING: Using aws costs money. This script does not delete any resources it
+# creates - if you don't want surprise bills, you need to delete these yourself.
 # WARNING: Will be working with ./out dir - if you have anything in there you
 # want to keep or not potentially overwrite, don't run this.
 # To execute this pipeline, from repo directory shell something like:
@@ -30,3 +32,25 @@ steps:
           Bucket: '{bucket}'
           Key: arb.txt
           Filename: ./out/arbfroms3.txt
+  - name: pypyraws.steps.client
+    description: upload an SSE-S3 encrypted file to s3 - server-side encryption with s3 key
+    in:
+      awsClientIn:
+        serviceName: s3
+        methodName: upload_file
+        methodArgs:
+          Filename: ./testfiles/arb.txt
+          Bucket: '{bucket}'
+          Key: arb.enc
+          ExtraArgs:
+            ServerSideEncryption: AES256
+  - name: pypyraws.steps.client
+    description: download an SSE-S3 encrypted file from s3 - server-side encryption with s3 key
+    in:
+      awsClientIn:
+        serviceName: s3
+        methodName: download_file
+        methodArgs:
+          Bucket: '{bucket}'
+          Key: arb.enc
+          Filename: ./out/arbfroms3.decrypted
