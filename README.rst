@@ -37,13 +37,46 @@ In the repo root, run:
   # this will give you all the gory details.
   $ pypyr simple --log 10
 
-slack
-------
-You need to have the pypyr slack plug-in installed.
+aws
+---
+You need to have the pypyr aws plug-in installed to run the aws samples.
 
 .. code-block:: bash
 
-  $ pip install pypyr-slack
+  $ pip install pypyraws
+
+For authentication, get full details
+`here <https://github.com/pypyr/pypyr-aws/tree/dev#aws-authentication>`__
+
+You're probably running this on a dev box. Seriously, don't run this anywhere
+close to production, or anything you actually care about.
+
+Since you're on a dev box, the easiest way to configure aws authentication is
+by just using the ``aws configure`` cli command. pypyr will automatically use
+these authentication credentials in lieu of any other authentication config.
+
+.. code-block:: bash
+
+  $ aws configure
+  AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+  AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+  Default region name [None]: us-west-2
+  Default output format [None]: ENTER
+
+
+Obligatory tiresome note:
+
+WARNING: Using aws costs money. These examples are for quick and dirty demo
+purposes and do not neccesarily delete resources they create. If you don't want
+surprise bills, you need to delete these yourself.
+
+slack
+------
+You need to have the pypyr slack plug-in installed to run the slack samples.
+
+.. code-block:: bash
+
+  $ pip install pypyrslack
 
 
 Check ./pipelines/slack.yaml for details.
