@@ -14,3 +14,11 @@ steps:
         XXX: pipe
         YYY: pipe
         ZZZ: "{k1}"
+  - name: pypyr.steps.filereplace
+    in:
+      fileReplaceIn: ./testfiles/replaceorder.txt
+      fileReplaceOut: ./out/replacementorder.out.txt
+      fileReplacePairs:
+        special: SPECIAL
+        # later replaces can affect earlier replaces
+        SPECIAL: XXX
