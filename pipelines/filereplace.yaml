@@ -1,0 +1,16 @@
+# WARNING: Will be working with ./out dir - if you have anything in there you
+# want to keep or not potentially overwrite, don't run this.
+# To execute this pipeline, from repo directory shell something like:
+# pypyr filereplace
+# notice that using a context format expression to assign the value of
+# context['k1'] to ZZZ when doing the replacement
+steps:
+  - name: pypyr.steps.filereplace
+    in:
+      k1: wept
+      fileReplaceIn: ./testfiles/replacements.txt
+      fileReplaceOut: ./out/replacements.out.txt
+      fileReplacePairs:
+        XXX: pipe
+        YYY: pipe
+        ZZZ: "{k1}"
