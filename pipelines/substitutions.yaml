@@ -19,9 +19,14 @@ steps:
     in:
       cmd: echo this is the env variable $USER - ${{USER}};
   - name: pypyr.steps.echo
-    description: use a sic string not to format any {values}
+    description: >
+                use a sic string not to format any {values}. Do watch the
+                use of the yaml literal with block chomping indicator |- to
+                prevent the last character in the string from being a LF. If
+                you don't do this, you will end up with the trailing " in your
+                output, which in this case would be malformed json.
     in:
-      echoMe: >
+      echoMe: |-
               [sic]"
               {
                 "key1": "key1 value with a {curly}"
@@ -29,4 +34,4 @@ steps:
   - name: pypyr.steps.echo
     description: use a sic string not to format any {values} on one line. No need to escape further quotes.
     in:
-      echoMe: '[sic]"string with a {curly} with ", '' and and & "'
+      echoMe: '[sic]"string with a {curly} with ", '' and & and double quote at end:""'
