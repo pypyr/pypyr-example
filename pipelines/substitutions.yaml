@@ -18,3 +18,15 @@ steps:
     description: substitute ENV variables with double braces, or just straight-up with $
     in:
       cmd: echo this is the env variable $USER - ${{USER}};
+  - name: pypyr.steps.echo
+    description: use a sic string not to format any {values}
+    in:
+      echoMe: >
+              [sic]"
+              {
+                "key1": "key1 value with a {curly}"
+              }"
+  - name: pypyr.steps.echo
+    description: use a sic string not to format any {values} on one line. No need to escape further quotes.
+    in:
+      echoMe: '[sic]"string with a {curly} with ", '' and and & "'
