@@ -1,0 +1,65 @@
+# Custom waiter for a beanstalk application and environment. Wait for beanstalk
+# application and environment status Ready before continuing pipeline processing.
+# Create a beanstalk application and environment in the pypyr pipeline.
+# WARNING: Using aws costs money. This script does not delete any resources it
+# creates - if you don't want surprise bills, you need to delete these yourself.
+# To execute this pipeline, from repo directory shell something like:
+# pypyr aws-beanstalk-waitfor
+steps:
+  - name: pypyraws.steps.client
+    description: create new beanstalk application version
+    in:
+      awsClientIn:
+        serviceName: elasticbeanstalk
+        methodName: create_application_version
+        methodArgs:
+            ApplicationName: "my wonderful beanstalk default application"
+            VersionLabel: v0.1
+            Description: Deploys the default beanstalk application
+            AutoCreateApplication: true
+            Process: true
+  - name: pypyraws.steps.waitfor
+    description: wait for create_application_version status to reach unprocessed
+    in:
+      awsWaitFor:
+        awsClientIn:
+          serviceName: elasticbeanstalk
+          methodName: describe_application_versions
+          methodArgs:
+              ApplicationName: "my wonderful beanstalk default application"
+              VersionLabels:
+                - v0.1
+        waitForField: '{ApplicationVersions[0][Status]}'
+        toBe: UNPROCESSED
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'Now that the app version is ready, the pypyr carries on with the next step.'
+  - name: pypyraws.steps.client
+    description: create new beanstalk application environment
+    in:
+      awsClientIn:
+        serviceName: elasticbeanstalk
+        methodName: create_environment
+        methodArgs:
+            ApplicationName: my wonderful beanstalk default application
+            EnvironmentName: my-wonderful-environment
+            VersionLabel: v0.1
+            Description: default beanstalk application environment
+            SolutionStackName: 32bit Amazon Linux running Tomcat 7
+  - name: pypyraws.steps.waitfor
+    description: wait for new environment status to reach Ready.
+    in:
+      awsWaitFor:
+        awsClientIn:
+          serviceName: elasticbeanstalk
+          methodName: describe_environments
+          methodArgs:
+              ApplicationName: my wonderful beanstalk default application
+              EnvironmentNames:
+                - my-wonderful-environment
+              VersionLabel: v0.1
+        waitForField: '{Environments[0][Status]}'
+        toBe: Ready
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'Finally, the pypyr has come back to the terminal!'
