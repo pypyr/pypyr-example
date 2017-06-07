@@ -14,6 +14,11 @@ steps:
     description: escape literal curlies by doubling - output is "{key1}"
     in:
       cmd: echo {{key1}}
+  - name: pypyr.steps.echo
+    description: be sure to put quotes around a format string specified in yaml if the 1st character is a {
+    in:
+      bareEchoValue: echo!
+      echoMe: '{bareEchoValue}'
   - name: pypyr.steps.shell
     description: substitute ENV variables with double braces, or just straight-up with $
     in:
@@ -35,3 +40,10 @@ steps:
     description: use a sic string not to format any {values} on one line. No need to escape further quotes.
     in:
       echoMe: '[sic]"string with a {curly} with ", '' and & and double quote at end:""'
+  - name: pypyr.steps.echo
+    description: substitute nested values
+    in:
+      root:
+        - list index 0
+        - key1: this is a value from a dict containing a list, which contains a dict at index 1
+      echoMe: 'you can also reference values nested in a hierarchy: {root[1][key1]}'
