@@ -35,10 +35,10 @@ steps:
       assertThis: '{k1}'
       assertEquals: '{k11}'
   - name: pypyr.steps.assert
-    description: string substitutions - different variables resolve to same value.
+    description: numbers are equal
     in:
-      assertThis: '{k1}'
-      assertEquals: '{k11}'
+      assertThis: 123
+      assertEquals: 123.0
   - name: pypyr.steps.assert
     description: compare two complex types - list with nested dictionaries.
     in:
