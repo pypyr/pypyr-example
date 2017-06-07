@@ -1,0 +1,53 @@
+steps:
+  - name: pypyr.steps.echo
+    in:
+      statusValue: False
+      string1: value1
+      string2: value1
+      complexThing1:
+        - thing1
+        - k1: value1
+          k2: value2
+          k3:
+            - sub list 1
+            - sub list 2
+      complexThing2:
+        - thing1
+        - k1: value1
+          k2: value2
+          k3:
+            - sub list 1
+            - sub list 2
+      echoMe: initialized values to assert on further down. . .
+  - name: pypyr.steps.assert
+    in:
+      replaceMe: True
+      k1: value 1
+      k11: value 1
+      k2: value 2
+      assertThis: True
+  - name: pypyr.steps.assert
+    in:
+      assertThis: '{replaceMe}'
+  - name: pypyr.steps.assert
+    description: string substitutions - different variables resolve to same value.
+    in:
+      assertThis: '{k1}'
+      assertEquals: '{k11}'
+  - name: pypyr.steps.assert
+    description: string substitutions - different variables resolve to same value.
+    in:
+      assertThis: '{k1}'
+      assertEquals: '{k11}'
+  - name: pypyr.steps.assert
+    description: compare two complex types - list with nested dictionaries.
+    in:
+      assertThis: '{complexThing1}'
+      assertEquals: '{complexThing2}'
+  - name: pypyr.steps.assert
+    description: you shall not pass!
+    in:
+      assertThis: '{statusValue}'
+  - name: pypyr.steps.echo
+    in:
+      echoMe: if you made it this far, something went wrong.
