@@ -8,3 +8,13 @@ steps:
       contextSet:
         echoMe: invalue
   - pypyr.steps.echo # this should echo echoMe, which now has the same value as invalue
+  - name: pypyr.steps.contextsetf
+    in:
+      contextSetf:
+        newKey: 'XXX {invalue} XXX'
+  - name: pypyr.steps.contextset
+    description: set echoMe from the newKey value
+    in:
+      contextSet:
+        echoMe: newKey
+  - pypyr.steps.echo # this should echo echoMe, which now has the same value as XXX+invalue+XXX
