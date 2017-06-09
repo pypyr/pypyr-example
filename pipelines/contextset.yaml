@@ -9,6 +9,7 @@ steps:
         echoMe: invalue
   - pypyr.steps.echo # this should echo echoMe, which now has the same value as invalue
   - name: pypyr.steps.contextsetf
+    description: contextsetf allows you to manipulate the value as you assign it.
     in:
       contextSetf:
         newKey: 'XXX {invalue} XXX'
