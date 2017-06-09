@@ -44,6 +44,11 @@ steps:
     in:
       assertThis: '{complexThing1}'
       assertEquals: '{complexThing2}'
+  - name: pypyr.steps.contextclear
+    in:
+      contextClear:
+        - assertThis
+        - assertEquals
   - name: pypyr.steps.assert
     description: you shall not pass!
     in:
