@@ -1,0 +1,15 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr pype-child --context="fromParent=set from cli arg string"
+# You can run this pipeline directly by itself per above. Or you can invoke it
+# from another pipeline - see pype.yaml for a parent pipeline that calls this
+# pype-child.
+context_parser: pypyr.parser.keyvaluepairs
+steps:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'inside child. This value is from parent: {fromParent}'
+  - name: pypyr.steps.contextsetf
+    in:
+      contextSetf:
+        fromParent: 22
+        fromChild: 33

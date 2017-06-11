@@ -1,0 +1,53 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr pype
+# This pipeline invokes a child pipeline, pype-child.
+steps:
+  - name: pypyr.steps.echo
+    in:
+      fromParent: 11
+      echoMe: starting parent pipeline
+  - name: pypyr.steps.pype
+    in:
+      pype:
+        name: pype-child # this will run pipelines/pype-child.yaml
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'back in parent. {fromChild} was set in child, and {fromParent} was updated in child from 11 to 22.'
+  - pypyr.steps.contextclearall
+  - name: pypyr.steps.pype
+    description: call child pipeline again. This time use the context_parser in the child to parse pipeArg instead of a context value.
+    in:
+      pype:
+        name: pype-child
+        pipeArg: fromParent=set from arg string in parent
+        skipParse: False
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'back in parent. {fromChild} was set in child, and {fromParent} was updated in child from a string to 22.'
+  - pypyr.steps.contextclearall
+  - name: pypyr.steps.pype
+    description: call child pipeline again. Use the context_parser in the child to parse pipeArg instead of a context value, and also do NOT pass the parent context to the child.
+    in:
+      fromParent: set in parent
+      pype:
+        name: pype-child
+        pipeArg: fromParent=set from arg string in parent
+        skipParse: False
+        useParentContext: False
+  - name: pypyr.steps.echo
+    in:
+      echoMe: >-
+              back in parent. fromChild was set in child but is not available in
+              parent, and the changes to fromParent made in child do not
+              show up here in the parent because useParentContext==False.
+              fromParent is still: "{fromParent}"
+  - pypyr.steps.contextclearall
+  - name: pypyr.steps.pype
+    description: ignore errors in child pipeline
+    in:
+      pype:
+        name: pype-child-err
+        raiseError: False
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'back in parent. Notice the divide by 0 did not stop the pypyr because raiseError==False'
