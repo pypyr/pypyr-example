@@ -1,0 +1,26 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr pype-recursion --context='counter=0'
+# This pipeline invokes a child pipeline, pype-recursion-child. The child
+# pipeline recursively invokes this parent pipeline in turn.
+context_parser: pypyr.parser.keyvaluepairs
+steps:
+    - name: pypyr.steps.echo
+      in:
+        echoMe: starting parent
+    - name: pypyr.steps.py
+      description: runs arb python
+      in:
+        # multi-line statement starts with |, per yaml spec
+        pycode: |
+                  print(context['counter'])
+                  context['counter']  = int(context['counter'])
+                  if context['counter'] > 2:
+                    raise ValueError('stop this recursion before it gets out of hand')
+    - name: pypyr.steps.pype
+      description: calling child pipeline
+      in:
+        pype:
+          name: pype-recursion-child
+    - name: pypyr.steps.echo
+      in:
+        echoMe: you shouldn't ever get here because the ValueError on top will interrupt the loop.
