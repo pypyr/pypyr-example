@@ -1,5 +1,5 @@
 # To execute this pipeline, from repo directory shell something like:
-# pypyr stepdecorators --context "isRetry=true"
+# pypyr stepdecorators --context "isRetry=true,isDebug=true,isDebug=1"
 # Notice how the isRetry flag is used to influence whether certain steps run in the pipeline
 context_parser: pypyr.parser.keyvaluepairs
 steps:
@@ -42,6 +42,17 @@ steps:
     in:
       echoMe: this WILL run only if isRetry in context is True.
     run: '{isRetry}'
+  - name: pypyr.steps.echo
+    description: Use a context property to decide if this step should be skipped or not.
+    in:
+      echoMe: this will NOT run if isDebug in context is True.
+    skip: '{isDebug}'
+  - name: pypyr.steps.echo
+    description: run evaluates before skip does.
+    in:
+      echoMe: this will NOT run because run evaluates before skip does.
+    run: false
+    skip: false
   - name: pypyr.steps.echo
     in:
       echoMe: done!
