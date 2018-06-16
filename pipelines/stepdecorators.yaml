@@ -1,0 +1,68 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr stepdecorators --context "isRetry=true,isDebug=true,isDebug=1,ignoreError=True"
+# Notice how the isRetry flag is used to influence whether certain steps run in the pipeline
+context_parser: pypyr.parser.keyvaluepairs
+steps:
+  - name: pypyr.steps.echo
+    description: the run decorator is optional. If not specified, defaults true.
+    in:
+      echoMe: this runs because although run is not specified, it defaults to true.
+  - name: pypyr.steps.echo
+    description: when run is true, this step will run. This is also the default, so you don't _have_ to specify it.
+    in:
+      echoMe: this runs because run is explicitly set to True.
+    run: true
+  - name: pypyr.steps.echo
+    description: 1 means True.
+    in:
+      echoMe: this runs because run is explicitly set to 1, which evalues to True.
+    run: 1
+  - name: pypyr.steps.echo
+    description: when run is false, this step will not run.
+    in:
+      echoMe: this will NOT run, because run is explicitly set to False.
+    run: false
+  - name: pypyr.steps.echo
+    description: 0 evaluates to false.
+    in:
+      echoMe: this will NOT run, because run is explicitly set to 0, which evaluates to false
+    run: 0
+  - name: pypyr.steps.echo
+    description: Empty evaluates to false.
+    in:
+      echoMe: this will NOT run, because run is explicitly set to empty, which evaluates to false
+    run:
+  - name: pypyr.steps.echo
+    description: String formatting expression
+    in:
+      echoMe: this WILL run, because run is set to an object (list, in this case), which evaluates to true.
+    run: [0]
+  - name: pypyr.steps.echo
+    description: Use a context property to decide if this step should run or not.
+    in:
+      echoMe: this WILL run only if isRetry in context is True.
+    run: '{isRetry}'
+  - name: pypyr.steps.echo
+    description: Use a context property to decide if this step should be skipped or not.
+    in:
+      echoMe: this will NOT run if isDebug in context is True.
+    skip: '{isDebug}'
+  - name: pypyr.steps.echo
+    description: run evaluates before skip does.
+    in:
+      echoMe: this will NOT run because run evaluates before skip does.
+    run: false
+    skip: false
+  - name: pypyr.steps.py
+    description: deliberately throw an error. swallow will ignore that error and keep processing.
+    in:
+      pycode: raise ValueError('arb error here. this will be swallowed.')
+    swallow: True
+  - name: pypyr.steps.py
+    description: deliberately throw an error. swallow will ignore from formatted context value.
+    in:
+      pycode: raise ValueError('arb error here. this will be swallowed if ignoreError is True.')
+    swallow: '{ignoreError}'
+  - name: pypyr.steps.echo
+    in:
+      echoMe: done!
