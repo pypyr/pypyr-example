@@ -21,3 +21,14 @@ steps:
     description: pretty print the newly merged k1 to stdout
     in:
       pycode: import json; print(json.dumps(context['k1'], indent=4))
+  - name: pypyr.steps.contextsetf
+    description: by comparison, contextset overwrites the existing key
+    in:
+      contextSetf:
+        k1:
+          k1.2:
+            k1.2.2: '{k2[k2.1]}'
+  - name: pypyr.steps.py
+    description: pretty print the newly overwritten k1 to stdout
+    in:
+      pycode: import json; print(json.dumps(context['k1'], indent=4))
