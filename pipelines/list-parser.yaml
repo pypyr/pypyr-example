@@ -1,0 +1,8 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr list-parser "eggs,bacon,ham"
+context_parser: pypyr.parser.list
+steps:
+  - name: pypyr.steps.echo
+    description: the arg passed into the pypyr cmd end up as a list in context under key argList
+    in:
+      echoMe: "the 2nd thing on the input list is: {argList[1]}"

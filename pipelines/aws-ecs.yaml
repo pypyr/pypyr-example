@@ -1,5 +1,5 @@
 # To execute this pipeline, from repo directory shell something like:
-# pypyr aws-ecs --context ./input/aws-ecs.yaml
+# pypyr aws-ecs ./input/aws-ecs.yaml
 # There's no real need to put the context config in a separate yaml, but in the
 # case of ecs where task definitions can take a lot of config, it's sort of
 # handy to keep it in its own yaml file. You can pretty much poach the boto3

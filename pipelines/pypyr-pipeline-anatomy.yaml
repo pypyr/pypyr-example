@@ -4,7 +4,7 @@
 # Don't run this, it's just an example. The modules don't exist.
 
 # optional
-# A context_parser parses the pypyr --context input argument.
+# A context_parser parses the pypyr context input argument (the 2nd arg).
 context_parser: my.custom.parser
 
 # mandatory.
