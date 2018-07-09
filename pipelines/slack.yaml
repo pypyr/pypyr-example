@@ -1,6 +1,6 @@
 # edit ./testfiles/credentials.yaml to set slackToken
 # To execute this pipeline, from repo directory shell something like:
-# pypyr slack --context ./testfiles/credentials.yaml
+# pypyr slack ./testfiles/credentials.yaml
 context_parser: pypyr.parser.yamlfile
 steps:
   - name: pypyrslack.steps.send

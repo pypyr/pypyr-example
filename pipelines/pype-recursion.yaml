@@ -1,5 +1,5 @@
 # To execute this pipeline, from repo directory shell something like:
-# pypyr pype-recursion --context='counter=0'
+# pypyr pype-recursion 'counter=0'
 # This pipeline invokes a child pipeline, pype-recursion-child. The child
 # pipeline recursively invokes this parent pipeline in turn.
 context_parser: pypyr.parser.keyvaluepairs

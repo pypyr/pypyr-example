@@ -1,9 +1,7 @@
-# To execute this pipeline, from repo directory shell something like:
-# pypyr pype-recursion-child --context='counter=0'
-# This pipeline invokes a child pipeline, pype-recursion-child. It's part of
-# a recursion demo where a parent and a child call each other recursively.
-# You can run this child pipeline directly, or you can run the parent as entry
-# point.
+# This is part of a recursion demo where a parent and a child call each other
+# recursively.
+# Run the parent as entry point:
+# pypyr pype-recursion 'counter=0'
 context_parser: pypyr.parser.keyvaluepairs
 steps:
   - name: pypyr.steps.echo

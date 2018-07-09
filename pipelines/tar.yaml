@@ -1,7 +1,7 @@
 # WARNING: Will be working with ./out dir - if you have anything in there you
 # want to keep or not potentially overwrite, don't run this.
 # To execute this pipeline, from repo directory shell something like:
-# pypyr tar --context fileName='myarchive'
+# pypyr tar fileName='myarchive'
 context_parser: pypyr.parser.keyvaluepairs
 steps:
   - name: pypyr.steps.shell

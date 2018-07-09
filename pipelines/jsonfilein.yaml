@@ -1,5 +1,5 @@
 # To execute this pipeline, from repo directory shell something like:
-# pypyr jsonfilein --context ./testfiles/sample.json
+# pypyr jsonfilein ./testfiles/sample.json
 context_parser: pypyr.parser.jsonfile
 steps:
   - pypyr.steps.echo # if there's an echoMe in the json, it'll echo here.
