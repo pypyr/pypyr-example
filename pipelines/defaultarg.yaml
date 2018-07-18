@@ -8,9 +8,9 @@
 # pypyr defaultarg isCI,isRetry
 context_parser: pypyr.parser.commas
 steps:
-  - name: pypyr.steps.contextdefault
+  - name: pypyr.steps.default
     in:
-      contextDefault:
+      defaults:
         isCI: False
         isRetry: False
   - name: pypyr.steps.echo
