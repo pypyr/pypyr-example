@@ -1,3 +1,5 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr contextmerge
 steps:
   - name: pypyr.steps.echo
     description: relatively arbitrarily setting some context values here
