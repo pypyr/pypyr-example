@@ -1,0 +1,26 @@
+# To execute this pipeline, from repo root shell something like:
+# pypyr defaultarg arb
+# And to run with isRetry
+# pypyr defaultarg isRetry
+# And to run with isCi:
+# pypyr defaultarg isCI
+# And to run with both Retry and CI:
+# pypyr defaultarg isCI,isRetry
+context_parser: pypyr.parser.commas
+steps:
+  - name: pypyr.steps.contextdefault
+    in:
+      contextDefault:
+        isCI: False
+        isRetry: False
+  - name: pypyr.steps.echo
+    run: '{isRetry}'
+    in:
+      echoMe: you'll only see me if IsRetry is True
+  - name: pypyr.steps.echo
+    run: '{isCI}'
+    in:
+      echoMe: this only runs in the CI environment, not on dev
+  - name: pypyr.steps.echo
+    in:
+      echoMe: done!
