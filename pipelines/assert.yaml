@@ -50,6 +50,22 @@ steps:
         - assertThis
         - assertEquals
   - name: pypyr.steps.assert
+    description: numbers are equal
+    in:
+      assertThis: 123
+      assertEquals: 123.0
+  - name: pypyr.steps.assert
+    description: compare an int and an int fetched by a str formatting expression.
+    in:
+      meaningOfLife: 42
+      assertThis: '{meaningOfLife}'
+      assertEquals: 42
+  - name: pypyr.steps.contextclear
+    in:
+      contextClear:
+        - assertThis
+        - assertEquals
+  - name: pypyr.steps.assert
     description: you shall not pass!
     in:
       assertThis: '{statusValue}'
