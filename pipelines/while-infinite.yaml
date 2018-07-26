@@ -1,0 +1,11 @@
+# To execute this pipeline, from repo root shell something like:
+# pypyr while-infinite
+steps:
+  - name: pypyr.steps.echo
+    description: runs infinitely
+    in:
+      echoMe: this is a deliberate infinite loop. ctrl+c to break.
+      alwaysFalse: False
+    while:
+      stop: '{alwaysFalse}'
+      sleep: 3

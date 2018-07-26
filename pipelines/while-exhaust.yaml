@@ -1,0 +1,30 @@
+# To execute this pipeline, from repo root shell something like:
+# pypyr while-exhaust maxreached
+# or
+# pypyr while-exhaust stopnevertrue
+context_parser: pypyr.parser.commas
+steps:
+  - name: pypyr.steps.default
+    in:
+      defaults:
+        maxreached: False
+        stopnevertrue: False
+  - name: pypyr.steps.echo
+    in:
+      echoMe: maxreached is {maxreached} and stopnevertrue is {stopnevertrue}
+  - name: pypyr.steps.echo
+    description: loop 5 times and then error
+    in:
+      echoMe: this is step {whileCounter}
+    while:
+      max: 3
+      errorOnMax: '{maxreached}'
+  - name: pypyr.steps.echo
+    description: loop until stopWhenImTrue is True, which it will never be.
+    in:
+      stopWhenImTrue: False
+      echoMe: this is step {whileCounter}
+    while:
+      max: 3
+      stop: '{stopWhenImTrue}'
+      errorOnMax: '{stopnevertrue}'

@@ -1,0 +1,10 @@
+# To execute this pipeline, from repo root shell something like:
+# pypyr while-sleep
+steps:
+  - name: pypyr.steps.echo
+    description: loop 5 times with 2 seconds sleep in between executions.
+    in:
+      echoMe: this is step {whileCounter}. ctrl-c if you're bored.
+    while:
+      max: 5
+      sleep: 2

@@ -1,0 +1,36 @@
+# To execute this pipeline, from repo root shell something like:
+# pypyr while
+steps:
+  - name: pypyr.steps.echo
+    description: loop 5 times
+    in:
+      echoMe: this is step {whileCounter}
+    while:
+      max: 5
+  - name: pypyr.steps.py
+    description: while with a stop condition
+    in:
+      stopWhenImTrue: False
+      pycode: |
+                print(f"this is while {context['whileCounter']} executing like a boss.")
+                if context['whileCounter'] == 3:
+                  context['stopWhenImTrue'] = True
+    while:
+      stop: '{stopWhenImTrue}'
+  - name: pypyr.steps.echo
+    description: |
+        Both max and stop specified. if stop never becomes True, will loop to max.
+        if you want reaching max without stop becoming True to be an error
+        condition, set errorOnMax=True.
+    in:
+      stopWhenImTrue: False
+      echoMe: this is step {whileCounter}
+    while:
+      max: 2
+      stop: '{stopWhenImTrue}'
+  - name: pypyr.steps.echo
+    description: if stop condition True before loop condition, loop won't run at all
+    in:
+      echoMe: if you see me, something went wrong, because stop was True before loop started!
+    while:
+      stop: True
