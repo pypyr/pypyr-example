@@ -1,0 +1,10 @@
+# To execute this pipeline, from repo root shell something like:
+# pypyr while-foreach
+steps:
+  - name: pypyr.steps.echo
+    description: loop 5 times and then error
+    in:
+      echoMe: we're having breakfast {whileCounter}, dish {i}
+    foreach: ['eggs', 'bacon', 'spam']
+    while:
+      max: 3
