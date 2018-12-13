@@ -54,3 +54,7 @@ steps:
         - list index 0
         - key1: this is a value from a dict containing a list, which contains a dict at index 1
       echoMe: 'you can also reference values nested in a hierarchy of different types: {root[1][key1]}'
+  - name: pypyr.steps.echo
+    description: use a sic string with a single quote.
+    in:
+      echoMe: "[sic]'string with {curlies} inside single quotes, : colon, quote \", backslash \\.'"
