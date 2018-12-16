@@ -1,0 +1,48 @@
+# WARNING: Will be working with ./out dir - if you have anything in there you
+# want to keep or not potentially overwrite, don't run this.
+#
+# To execute this pipeline, from repo directory shell something like:
+# pypyr filewritejson
+steps:
+  - name: pypyr.steps.default
+    description: set some arbitrary context we'll be writing to file
+    in:
+      defaults:
+        numbervalue: 77.00
+        paths:
+          outpath: ./out/filewritejson_formatting_out.json
+        key1: value1
+        key2: value2
+        key3:
+          key3.1:
+            - True
+            - 6
+            - 12.3
+            -
+              a: b
+              c: d
+              e: '{key1} and {key2}'
+          key3.2: 'and this is the path {paths[outpath]}'
+  - name: pypyr.steps.filewritejson
+    description: set the payload and path from a formatting expression
+    in:
+      fileWriteJson:
+        path: '{paths[outpath]}'
+        payload: '{key3}'
+  - name: pypyr.steps.filewritejson
+    description: set the payload inline, not from a formatting expression
+    in:
+      fileWriteJson:
+        path: ./out/filewritejson_noformatting_out.json
+        payload:
+          key3.1:
+            - True
+            - 6
+            - 12.3
+            -
+              a: b
+              c: d
+              e: '{key1} and {key2}'
+          key3.2: 'and this is a nested value: {key3[key3.2]}'
+          # notice how this is treated as a number
+          key3.3: '{numbervalue}'
