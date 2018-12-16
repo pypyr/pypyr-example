@@ -1,0 +1,12 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr cd
+steps:
+  - name: pypyr.steps.shell
+    description: hop one up from current working dir.
+                 sic means won't attempt to substitute {PWD} from context.
+    in:
+      cmd: !sic echo ${PWD}; cd ../; echo ${PWD}
+  - name: pypyr.steps.shell
+    description: back to your current working dir
+    in:
+      cmd: !sic echo ${PWD}

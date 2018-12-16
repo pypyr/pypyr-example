@@ -1,0 +1,34 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr pystrings
+steps:
+  - name: pypyr.steps.default
+    description: set some arbitrary values in context
+    in:
+      defaults:
+        breakfastList: ['eggs', 'spam', 'bacon']
+        thisIsAnInt: 5
+        thisIsABool: True
+        thisIsAnotherBool: False
+  - name: pypyr.steps.echo
+    description: only run this step if breakfast includes spam
+    run: !py "'spam' in breakfastList"
+    in:
+      echoMe: you should see me because spam is in breakfastList
+  - name: pypyr.steps.echo
+    description: don't run this step if int < 4
+                 no need to wrap the expression in extra quotes!
+    run: !py thisIsAnInt < 5
+    in:
+      echoMe: if you see this something is wrong!
+  - name: pypyr.steps.echo
+    description: use boolean inverse to skip step
+    skip: '[py]`not thisIsABool and thisIsABool or thisIsAnInt > 6`'
+    in:
+      echoMe: you should see me because !thisIsABool & thisIsABool
+  - name: pypyr.steps.echo
+    description: use py strings in while loops to kick out of a loop early
+    while:
+     max: 5
+     stop: !py whileCounter == 3
+    in:
+     echoMe: "looping with counter {whileCounter}"

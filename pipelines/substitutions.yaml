@@ -27,19 +27,17 @@ steps:
     description: >
                 use a sic string not to format any {values}. Do watch the
                 use of the yaml literal with block chomping indicator |- to
-                prevent the last character in the string from being a LF. If
-                you don't do this, you will end up with the trailing " in your
-                output, which in this case would be malformed json.
+                prevent the last character in the string from being a LF.
     in:
-      echoMe: |-
-              [sic]"
+      echoMe: !sic |-
+
               {
                 "key1": "key1 value with a {curly}"
-              }"
+              }
   - name: pypyr.steps.echo
     description: use a sic string not to format any {values} on one line. No need to escape further quotes.
     in:
-      echoMe: '[sic]"string with a {curly} with ", '' and & and double quote at end:""'
+      echoMe: !sic string with a {curly} with ", ' and & and double quote at end:"
   - name: pypyr.steps.echo
     description: substitute nested dicts
     in:
@@ -57,4 +55,8 @@ steps:
   - name: pypyr.steps.echo
     description: use a sic string with a single quote.
     in:
-      echoMe: "[sic]'string with {curlies} inside single quotes, : colon, quote \", backslash \\.'"
+      echoMe: !sic 'string with {curlies} inside single quotes, : colon, quote ", backslash \.'
+  - name: pypyr.steps.echo
+    description: use a sic string with a double quote. Double up the backslashes!
+    in:
+      echoMe: !sic "string with {curlies} inside double quotes, : colon, quote \", backslash \\."
