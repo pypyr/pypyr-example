@@ -1,0 +1,9 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr fileformatjson
+steps:
+  - name: pypyr.steps.fileformatjson
+    description: read a yaml from json, do some substitutions, write back out.
+    in:
+      contextKeyHere: this value was set in the pipeline context!!
+      fileFormatJsonIn: ./testfiles/sample-with-substitutions.json
+      fileFormatJsonOut: ./out/sample-with-substitutions.json
