@@ -1,0 +1,47 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr debug
+steps:
+  - name: pypyr.steps.debug
+    description: print a single key
+    in:
+      k1:
+        k1.1: v1.1
+        k1.2:
+          k1.2.1: v1.2.1
+          k1.2.2: '{k2[k2.1]}'
+        k1.3: v1.3
+      k2:
+        k2.1: v2.1
+      debug:
+        keys: k1
+  - name: pypyr.steps.debug
+    description: print a bunch of keys
+    in:
+      debug:
+        keys: [k1, k2]
+  - name: pypyr.steps.debug
+    description: print a bunch of keys, alternative list format
+    in:
+      debug:
+        keys:
+          - k1
+          - k2
+  - name: pypyr.steps.debug
+    description: print a single key with formatting
+    in:
+      debug:
+        keys: k1
+        format: True
+  - name: pypyr.steps.contextclear
+    description: clearing the debug key from previous step
+    in:
+      contextClear:
+        - debug
+  # you can run debug as a simple step without specifying any inputs.
+  # this will dump the entire context to output.
+  - pypyr.steps.debug
+  - name: pypyr.steps.debug
+    description: print entire context with string formatting applied
+    in:
+      debug:
+        format: True
