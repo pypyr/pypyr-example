@@ -25,50 +25,51 @@ steps:
       k1: value 1
       k11: value 1
       k2: value 2
-      assertThis: True
+      assert:
+        this: True
   - name: pypyr.steps.assert
     in:
-      assertThis: '{replaceMe}'
+      assert:
+        this: '{replaceMe}'
   - name: pypyr.steps.assert
     description: string substitutions - different variables resolve to same value.
     in:
-      assertThis: '{k1}'
-      assertEquals: '{k11}'
+      assert:
+        this: '{k1}'
+        equals: '{k11}'
   - name: pypyr.steps.assert
     description: numbers are equal
     in:
-      assertThis: 123
-      assertEquals: 123.0
+      assert:
+          this: 123
+          equals: 0123.0
   - name: pypyr.steps.assert
     description: compare two complex types - list with nested dictionaries.
     in:
-      assertThis: '{complexThing1}'
-      assertEquals: '{complexThing2}'
-  - name: pypyr.steps.contextclear
-    in:
-      contextClear:
-        - assertThis
-        - assertEquals
+      assert:
+        this: '{complexThing1}'
+        equals: '{complexThing2}'
   - name: pypyr.steps.assert
     description: numbers are equal
     in:
-      assertThis: 123
-      assertEquals: 123.0
+      assert:
+        this: 123
+        equals: 123.0
   - name: pypyr.steps.assert
     description: compare an int and an int fetched by a str formatting expression.
     in:
       meaningOfLife: 42
-      assertThis: '{meaningOfLife}'
-      assertEquals: 42
-  - name: pypyr.steps.contextclear
+      assert:
+        this: '{meaningOfLife}'
+        equals: 42
+  - name: pypyr.steps.echo
     in:
-      contextClear:
-        - assertThis
-        - assertEquals
+      echoMe: the next negative assert will stop the pipeline
   - name: pypyr.steps.assert
     description: you shall not pass!
     in:
-      assertThis: '{statusValue}'
+      assert:
+        this: '{statusValue}'
   - name: pypyr.steps.echo
     in:
       echoMe: if you made it this far, something went wrong.
