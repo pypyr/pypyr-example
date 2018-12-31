@@ -11,35 +11,31 @@ steps:
   - name: pypyr.steps.tar
     description: default uses xz. you can test your archive with "cd out; tar xf testfile.tar.xz"
     in:
-      tarArchive:
-        - in: testfiles
-          out: out/testfile.tar.xz
-  - name: pypyr.steps.contextclear
-    in:
-      contextClear:
-        - tarArchive
+      tar:
+        archive:
+          - in: testfiles
+            out: out/testfile.tar.xz
   - name: pypyr.steps.tar
     in:
-      tarExtract:
-        - in: ./out/testfile.tar.xz
-          out: out/originals
-  - name: pypyr.steps.contextclear
-    in:
-      contextClear:
-        - tarExtract
+      tar:
+        extract:
+          - in: ./out/testfile.tar.xz
+            out: out/originals
   - name: pypyr.steps.tar
     description: use gz and get fileName from context
     in:
-      tarFormat: gz
-      tarArchive:
-        - in: ./testfiles
-          out: out/{fileName}.tar.gz
+      tar:
+        format: gz
+        archive:
+          - in: ./testfiles
+            out: out/{fileName}.tar.gz
   - name: pypyr.steps.tar
     description: use plain tar (no compression)
     in:
-      tarFormat: ''
-      tarArchive:
-        - in: ./testfiles
-          out: out/plainole.tar
-        - in: ./LICENSE
-          out: out/singlefile.tar
+      tar:
+        format: ''
+        archive:
+          - in: ./testfiles
+            out: out/plainole.tar
+          - in: ./LICENSE
+            out: out/singlefile.tar
