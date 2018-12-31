@@ -5,9 +5,10 @@ steps:
   - name: pypyr.steps.env
     description: set $ARB_ENV1 and $ARB_ENV2
     in:
-      envSet:
-        ARB_ENV1: 'from_{key1}_context'
-        ARB_ENV2: 'string set in pipeline yaml'
+      env:
+        set:
+          ARB_ENV1: 'from_{key1}_context'
+          ARB_ENV2: 'string set in pipeline yaml'
   - name: pypyr.steps.shell
     description: show the $ARB_ENV1 and $ARB_ENV2 env vars was set by previous step
     in:
@@ -15,22 +16,21 @@ steps:
   - name: pypyr.steps.env
     description: write $ARB_ENV1 and $ARB_ENV2 into the pypyr context as context1 and context2.
     in:
-      envGet:
-        context1: ARB_ENV1
-        context2: ARB_ENV2
+      env:
+        get:
+          context1: ARB_ENV1
+          context2: ARB_ENV2
   - name: pypyr.steps.py
     description: show context values that envget got from $ENVs
     in:
       pycode: print(f"pypyr context values were set from env vars. '{context['context1']}' from ARB_ENV1 and '{context['context2']}' from ARB_ENV2")
   - name: pypyr.steps.env
-    description: |
-                  unset the $ENVs just created. At this point envSet and envGet
-                  are actually still in context from the previous steps, so this
-                  step will actually do envGet, envSet and then unSet.
+    description: unset the $ENVs just created.
     in:
-      envUnset:
-        - ARB_ENV1
-        - ARB_ENV2
+      env:
+        unset:
+          - ARB_ENV1
+          - ARB_ENV2
   - name: pypyr.steps.shell
     description: show the $ARB_ENV1 and $ARB_ENV2 are empty now
     in:
@@ -38,16 +38,17 @@ steps:
   - name: pypyr.steps.env
     description: all in one
     in:
-      envGet:
+      env:
+        get:
           key2: PWD
           key4: USER
-      envSet:
+        set:
           ARB_SET_ME1: 'value 4'
           ARB_SET_ME2: 'go go {key2} end end'
-      envUnset:
+        unset:
           - ARB_SET_ME1
           - ARB_SET_ME2
   - name: pypyr.steps.shell
     description: show context values for key2 and key4 from previous step
     in:
-      cmd: echo this is key2, containing PWD - {key2} and this is key4 containing USER - {key4}
+      cmd: "echo this is key2, containing PWD - {key2} and this is key4 containing USER - {key4}. ARB_SET_ME1 is empty: $ARB_SET_ME1"
