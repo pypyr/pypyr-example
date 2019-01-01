@@ -1,0 +1,42 @@
+# WARNING: Will be working with ./out dir - if you have anything in there you
+# want to keep or not potentially overwrite, don't run this.
+# To execute this pipeline, from repo directory shell something like:
+# pypyr filereplace-deprecated
+# notice that using a context format expression to assign the value of
+# context['k1'] to ZZZ when doing the replacement
+steps:
+  - name: pypyr.steps.filereplace
+    in:
+      k1: wept
+      fileReplaceIn: ./testfiles/replacements.txt
+      fileReplaceOut: ./out/replacements.out.txt
+      fileReplacePairs:
+        XXX: pipe
+        YYY: pipe
+        ZZZ: "{k1}"
+  - name: pypyr.steps.filereplace
+    in:
+      fileReplaceIn: ./testfiles/replaceorder.txt
+      fileReplaceOut: ./out/replacementorder.out.txt
+      fileReplacePairs:
+        special: SPECIAL
+        # later replaces can affect earlier replaces
+        SPECIAL: XXX
+  - name: pypyr.steps.filereplace
+    description: use a list of globs instead of a single input file.
+                 each glob in the list fill be expanded.
+                 results written to the out directory.
+    in:
+      fileReplaceIn:
+        - ./testfiles/replace/sub/*.txt
+        - ./testfiles/replace/*
+      fileReplaceOut: ./out/replace/
+      fileReplacePairs:
+                XXX: pipe
+                YYY: pipe
+                ZZZ: "{k1}"
+                <<ARB>>: sung
+                <<ARB2>>: read
+                # notice escaping literal curlies by doubling
+                '{{arbbraces}}': valleys
+                manywords: wrote my happy songs

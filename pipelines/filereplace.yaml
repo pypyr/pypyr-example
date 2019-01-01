@@ -8,35 +8,52 @@ steps:
   - name: pypyr.steps.filereplace
     in:
       k1: wept
-      fileReplaceIn: ./testfiles/replacements.txt
-      fileReplaceOut: ./out/replacements.out.txt
-      fileReplacePairs:
-        XXX: pipe
-        YYY: pipe
-        ZZZ: "{k1}"
+      fileReplace:
+        in: ./testfiles/replacements.txt
+        out: ./out/replacements.out.txt
+        replacePairs:
+          XXX: pipe
+          YYY: pipe
+          ZZZ: "{k1}"
   - name: pypyr.steps.filereplace
     in:
-      fileReplaceIn: ./testfiles/replaceorder.txt
-      fileReplaceOut: ./out/replacementorder.out.txt
-      fileReplacePairs:
-        special: SPECIAL
-        # later replaces can affect earlier replaces
-        SPECIAL: XXX
+      fileReplace:
+        in: ./testfiles/replaceorder.txt
+        out: ./out/replacementorder.out.txt
+        replacePairs:
+          special: SPECIAL
+          # later replaces can affect earlier replaces
+          SPECIAL: XXX
   - name: pypyr.steps.filereplace
     description: use a list of globs instead of a single input file.
                  each glob in the list fill be expanded.
                  results written to the out directory.
     in:
-      fileReplaceIn:
-        - ./testfiles/replace/sub/*.txt
-        - ./testfiles/replace/*
-      fileReplaceOut: ./out/replace/
-      fileReplacePairs:
-                XXX: pipe
-                YYY: pipe
-                ZZZ: "{k1}"
-                <<ARB>>: sung
-                <<ARB2>>: read
-                # notice escaping literal curlies by doubling
-                '{{arbbraces}}': valleys
-                manywords: wrote my happy songs
+      fileReplace:
+        in:
+          - ./testfiles/replace/sub/*.txt
+          - ./testfiles/replace/*
+        out: ./out/replace/
+        replacePairs:
+            XXX: pipe
+            YYY: pipe
+            ZZZ: "{k1}"
+            <<ARB>>: sung
+            <<ARB2>>: read
+            # notice escaping literal curlies by doubling
+            '{{arbbraces}}': valleys
+            manywords: wrote my happy songs
+  - name: pypyr.steps.safeshell
+    description: in-place edit will overwrite the in-file. make a copy 1st.
+    in:
+      cmd: cp ./testfiles/replacements.txt ./out/inplaceeditreplacements.txt
+  - name: pypyr.steps.filereplace
+    description: no out specified, means this will be an in-place edit.
+    in:
+      fileReplace:
+        in: ./out/inplaceeditreplacements.txt
+        out:
+        replacePairs:
+          XXX: pipe
+          YYY: pipe
+          ZZZ: "{k1}"
