@@ -23,41 +23,40 @@ steps:
   - name: pypyr.steps.fileformat
     description: read a file from disk, do some substitutions, write back out.
     in:
-      fileFormatIn: ./testfiles/fileformat-in.1.txt
-      fileFormatOut: ./out/fileformat-out.txt
-  - name: pypyr.steps.contextclear
-    description: get rid of the previous fileFormat props, specifically so
-                 fileFormatOut doesn't still sit in context for the next step.
-    in:
-      contextClear:
-        - fileFormatOut
+      fileFormat:
+        in: ./testfiles/fileformat-in.1.txt
+        out: ./out/fileformat-out.txt
   - name: pypyr.steps.fileformat
     description: in-place edit, read a file from disk, do some substitutions,
                  overwrite the input file with the result.
     in:
-      fileFormatIn: ./testfiles/fileformat-in.1.txt
+      fileFormat:
+        in: ./testfiles/fileformat-in.1.txt
   - name: pypyr.steps.fileformat
     description: use a glob to format a whole lotta files in one go.
                  don't use outpath when you're globbing.
                  globbing implies in-place edits.
     in:
-      fileFormatIn: ./testfiles/??b/fileformat-in.*.txt
+      fileFormat:
+        in: ./testfiles/??b/fileformat-in.*.txt
   - name: pypyr.steps.fileformat
     description: use a list for multiple in paths to process.
                  each list item has globbing run on it.
                  don't use outpath when you're passing in a list.
                  globbing implies in-place edits.
     in:
-      fileFormatIn:
-        - ./testfiles/sub2/fileformat-in.sub.1.txt
-        - ./testfiles/sub2/**/*subsub*.txt
+      fileFormat:
+        in:
+          - ./testfiles/sub2/fileformat-in.sub.1.txt
+          - ./testfiles/sub2/**/*subsub*.txt
   - name: pypyr.steps.fileformat
     description: use a list for multiple in paths to process.
                  each list item has globbing run on it.
                  outpath uses / at end to show it's a dir.
                  this will flatten src dir hierarchy into the out dir.
     in:
-      fileFormatIn:
-        - ./testfiles/sub3/**/*.txt
-        - ./testfiles/sub2/*2*
-      fileFormatOut: ./out/sub3/
+      fileFormat:
+          in:
+            - ./testfiles/sub3/**/*.txt
+            - ./testfiles/sub2/*2*
+          out: ./out/sub3/
