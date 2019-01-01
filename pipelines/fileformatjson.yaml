@@ -5,5 +5,6 @@ steps:
     description: read a yaml from json, do some substitutions, write back out.
     in:
       contextKeyHere: this value was set in the pipeline context!!
-      fileFormatJsonIn: ./testfiles/sample-with-substitutions.json
-      fileFormatJsonOut: ./out/sample-with-substitutions.json
+      fileFormatJson:
+        in: ./testfiles/sample-with-substitutions.json
+        out: ./out/sample-with-substitutions.json

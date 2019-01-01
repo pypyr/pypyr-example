@@ -1,0 +1,11 @@
+echoMe: this text lives inside a yaml file
+key4:
+  k41: k41value
+  k42:
+    - k42list1
+    # there's a comment here between 1 and 2. It won't be preserved.
+    - k42list2
+    - k42list3
+    - '{contextKeyHere}'
+  k43: True
+  k44: 77
