@@ -1,13 +1,29 @@
 # To execute this pipeline, from repo directory shell something like:
 # pypyr shell
   steps:
-    - name: pypyr.steps.safeshell
-      description: runs safe cmd - this runs a program with args, but doesn't run it in a shell.
+    - name: pypyr.steps.cmd
+      description: runs cmd - this runs a program with args, but doesn't run it in a shell.
       in:
         cmd: ls -a
     - name: pypyr.steps.shell
       in:
         cmd: ls | grep pipe; echo if you had something pipey it should show up;
+    - name: pypyr.steps.cmd
+      description: runs command and save output.
+      in:
+        cmd:
+          run: echo 'hello from pypyr'
+          save: True
+    - name: pypyr.steps.debug
+      description: check out the cmd output saved to cmdOut!
+      in:
+        debug:
+          keys: cmdOut
+    - name: pypyr.steps.echo
+      run: !py "cmdOut['returncode'] == 0"
+      in:
+        echoMe: "you'll only see me if cmd ran successfully with return code 0.
+                the command output was: {cmdOut[stdout]}"
     - name: pypyr.steps.shell
       description: runs dangerous cmd in shell and raises deliberate error.
       in:
