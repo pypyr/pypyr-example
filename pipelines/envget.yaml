@@ -1,0 +1,27 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr envget
+steps:
+  - name: pypyr.steps.envget
+    description: get $env, if it doesn't exist, use default value instead
+    comment: notice how the yaml null will end up creating save-me-here
+             as None.
+    in:
+      envGet:
+        - env: THIS-ENV-PROB-DOESNT-EXIST
+          key: saveMeHere
+          default: null
+  - name: pypyr.steps.contextsetf
+    description: create a bool based on whether save-me-here has a value
+    in:
+      contextSetf:
+        isSaveMeHereSet: !py saveMeHere is not None
+  - name: pypyr.steps.echo
+    run: '{isSaveMeHereSet}'
+    in:
+      echoMe: you'll only see me if THIS-ENV-PROB-DOESNT-EXIST didn't exist.
+  - name: pypyr.steps.debug
+    in:
+      debug:
+        keys:
+          - saveMeHere
+          - isSaveMeHereSet
