@@ -19,6 +19,7 @@ steps:
         - ./README.rst
         - ./xxx/yyy/notthere
         - ./**/{arbkey}*
+        - ./input # also finds dirs
   - name: pypyr.steps.debug
     in:
       debug:
