@@ -18,7 +18,7 @@ steps:
   - name: pypyr.steps.echo
     run: '{isSaveMeHereSet}'
     in:
-      echoMe: you'll only see me if THIS-ENV-PROB-DOESNT-EXIST didn't exist.
+      echoMe: you'll only see me if THIS-ENV-PROB-DOESNT-EXIST did exist.
   - name: pypyr.steps.debug
     comment: pump out the values so you can see for yourself. . .
     in:

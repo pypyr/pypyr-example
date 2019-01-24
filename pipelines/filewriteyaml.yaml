@@ -46,3 +46,9 @@ steps:
           key3.2: 'and this is a nested value: {key3[key3.2]}'
           # notice how this is treated as a number
           key3.3: '{numbervalue}'
+  - name: pypyr.steps.filewriteyaml
+    description: write a single context key
+    in:
+      fileWriteYaml:
+        path: ./out/filewriteyaml_single
+        payload: 'my string here'
