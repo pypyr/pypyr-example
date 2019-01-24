@@ -1,0 +1,27 @@
+# fetch yaml into the pypyr context
+# To execute this pipeline, from repo directory shell something like:
+# pypyr fetchyaml
+steps:
+  - name: pypyr.steps.fetchyaml
+    description: fetch yaml from path
+    in:
+      fetchYaml:
+        path: ./testfiles/sample.yaml
+  - pypyr.steps.debug
+  - pypyr.steps.contextclearall
+  - name: pypyr.steps.fetchyaml
+    description: fetch yaml into key with path substitutions
+    in:
+      filename: 'sample'
+      keyname: 'savemehere'
+      fetchYaml:
+        path: ./testfiles/{filename}.yaml
+        key: '{keyname}'
+  - pypyr.steps.debug
+  - pypyr.steps.contextclearall
+  - name: pypyr.steps.fetchyaml
+    description: fetch yaml into key in simplified input format
+    in:
+      filename: 'sample'
+      fetchYaml: ./testfiles/{filename}.yaml
+  - pypyr.steps.debug
