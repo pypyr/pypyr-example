@@ -1,0 +1,33 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr pathcheck
+steps:
+  - name: pypyr.steps.pathcheck
+    in:
+      pathCheck: ./**/*.py
+  - name: pypyr.steps.echo
+    run: '{pathCheckOut[./**/*.py][exists]}'
+    in:
+      echoMe: You'll only see me if path to check found files that exists.
+  - name: pypyr.steps.debug
+    in:
+      debug:
+        keys: pathCheckOut
+  - name: pypyr.steps.pathcheck
+    in:
+      arbkey: mycustom
+      pathCheck:
+        - ./README.rst
+        - ./xxx/yyy/notthere
+        - ./**/{arbkey}*
+  - name: pypyr.steps.debug
+    in:
+      debug:
+        keys: pathCheckOut
+  - name: pypyr.steps.echo
+    in:
+      echoMe: "let's get how many files were found: {pathCheckOut[./README.rst][count]}"
+  - name: pypyr.steps.echo
+    description: find your path with a formatting expression
+    run: '{pathCheckOut[./**/{arbkey}*][exists]}'
+    in:
+      echoMe: "You'll see me if {arbkey} was found."
