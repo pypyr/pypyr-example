@@ -1,0 +1,27 @@
+# fetch json into the pypyr context
+# To execute this pipeline, from repo directory shell something like:
+# pypyr fetchjson
+steps:
+  - name: pypyr.steps.fetchjson
+    description: fetch json from path
+    in:
+      fetchJson:
+        path: ./testfiles/sample.json
+  - pypyr.steps.debug
+  - pypyr.steps.contextclearall
+  - name: pypyr.steps.fetchjson
+    description: fetch json into key with path substitutions
+    in:
+      filename: 'sample'
+      keyname: 'savemehere'
+      fetchJson:
+        path: ./testfiles/{filename}.json
+        key: '{keyname}'
+  - pypyr.steps.debug
+  - pypyr.steps.contextclearall
+  - name: pypyr.steps.fetchjson
+    description: fetch json into key in simplified input format
+    in:
+      filename: 'sample'
+      fetchJson: ./testfiles/{filename}.json
+  - pypyr.steps.debug
