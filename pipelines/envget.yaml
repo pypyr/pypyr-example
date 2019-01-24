@@ -20,8 +20,20 @@ steps:
     in:
       echoMe: you'll only see me if THIS-ENV-PROB-DOESNT-EXIST didn't exist.
   - name: pypyr.steps.debug
+    comment: pump out the values so you can see for yourself. . .
     in:
       debug:
         keys:
           - saveMeHere
           - isSaveMeHereSet
+  - name: pypyr.steps.envget
+    description: you can also pass a single getitem, not a list
+    in:
+      envGet:
+        env: MACAVITY
+        key: theHiddenPaw
+        default: but macavity wasn't there!
+  - name: pypyr.steps.debug
+    in:
+      debug:
+        keys: theHiddenPaw

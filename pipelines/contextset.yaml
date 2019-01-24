@@ -19,3 +19,23 @@ steps:
       contextSet:
         echoMe: newKey
   - pypyr.steps.echo # this should echo echoMe, which now has the same value as XXX+invalue+XXX
+  - name: pypyr.steps.contextsetf
+    description: use py strings for conditional and ternary assignments.
+    in:
+      arb1: null
+      arb2: ''
+      arb3: eggymyvalue
+      arb4: [1,1,2,3,5,8]
+      contextSetf:
+        isNull: !py arb1 is None # make a bool based on None
+        isEmpty: !py bool(arb2) # use truthy, empty strings are false
+        ternaryResult: !py "'eggs' if arb3 == 'eggymyvalue' else 'ham'"
+        isIn: !py 10 in arb4 # bool if thing in list
+  - name: pypyr.steps.debug
+    in:
+      debug:
+        keys:
+          - isNull
+          - isEmpty
+          - ternaryResult
+          - isIn
