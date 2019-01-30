@@ -24,6 +24,18 @@
       in:
         echoMe: "you'll only see me if cmd ran successfully with return code 0.
                 the command output was: {cmdOut[stdout]}"
+    - name: pypyr.steps.cmd
+      description: change directory when executing cmd
+      in:
+        cmd:
+          run: ls
+          cwd: ./pipelines
+    - name: pypyr.steps.shell
+      description: change directory when executing shell
+      in:
+        cmd:
+          run: echo $PWD
+          cwd: ./input
     - name: pypyr.steps.shell
       description: runs dangerous cmd in shell and raises deliberate error.
       in:
