@@ -31,6 +31,11 @@
           run: ls
           cwd: ./pipelines
     - name: pypyr.steps.shell
+      description: show the default current working dir
+      in:
+        cmd:
+          run: echo $PWD
+    - name: pypyr.steps.shell
       description: change directory when executing shell
       in:
         cmd:
