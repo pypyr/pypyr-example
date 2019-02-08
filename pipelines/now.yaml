@@ -1,0 +1,20 @@
+steps:
+  - pypyr.steps.now
+  - pypyr.steps.nowutc
+  - name: pypyr.steps.echo
+    in:
+      echoMe: now is {now} and utc time is {nowUtc}
+  - name: pypyr.steps.now
+    in:
+      nowIn: '%A %Y %m/%d %H:%M in timezone %Z offset %z, localized to %x'
+  - name: pypyr.steps.nowutc
+    in:
+      nowUtcIn: '%A %Y %m/%d %H:%M in timezone %Z offset %z, localized to %x'
+  - pypyr.steps.echo
+  # calling now and nowutc again as simple steps will re-use previously set
+  # formatting from nowIn and nowUtcIn
+  - pypyr.steps.now
+  - pypyr.steps.nowutc
+  - name: pypyr.steps.echo
+    in:
+      echoMe: now is {now} and utc time is {nowUtc}
