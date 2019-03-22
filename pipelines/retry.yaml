@@ -1,0 +1,22 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr retry
+  steps:
+    - name: pypyr.steps.shell
+      description: this step will retry infinitely until the cmd does not return an error.
+      retry:
+        max: 0 # 0 or null means indefinitely
+      in:
+        cmd: if [ "{retryCounter}" -eq 3 ]; then exit 0; else exit 1; fi
+    - name: pypyr.steps.echo
+      in:
+        echoMe: you'll see me only after the previous cmd exits its retries by completing without error.
+    - name: pypyr.steps.shell
+      description: this step will retry a max of 10x or until the cmd does not return an error.
+      retry:
+        max: 10
+        sleep: 0.5
+      in:
+        cmd: if [ "{retryCounter}" -eq 4 ]; then exit 0; else exit 1; fi
+    - name: pypyr.steps.echo
+      in:
+        echoMe: done! the 1st cmd retries 3x, the 2nd cmd retried 4x.
