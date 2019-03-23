@@ -1,0 +1,17 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr retryontypes
+  steps:
+    - name: pypyr.steps.py
+      description: this step will retry infinitely until the cmd does not return an error.
+      retry:
+        # will ONLY retry these errors. All other stop processing.
+        retryOn: ['KeyError', 'pypyr.errors.ContextError']
+      in:
+        pycode: |
+                if context['retryCounter'] == 3:
+                  raise ValueError('Booom!')
+                else:
+                  raise KeyError('this will retry')
+    - name: pypyr.steps.echo
+      in:
+        echoMe: you'll see me only after the previous cmd exits its retries by completing without error.
