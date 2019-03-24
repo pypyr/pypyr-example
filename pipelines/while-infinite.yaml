@@ -5,7 +5,6 @@ steps:
     description: runs infinitely
     in:
       echoMe: this is a deliberate infinite loop. ctrl+c to break.
-      alwaysFalse: False
     while:
-      stop: '{alwaysFalse}'
+      stop: False
       sleep: 3
