@@ -20,3 +20,9 @@
     - name: pypyr.steps.echo
       in:
         echoMe: done! the 1st cmd retries 3x, the 2nd cmd retried 4x.
+    - name: pypyr.steps.shell
+      description: this'll work 1st time.
+      retry:
+        max: 3 # 0 or null means indefinitely
+      in:
+        cmd: echo this doesnt retry because it works 1st time
