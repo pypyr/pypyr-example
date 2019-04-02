@@ -39,3 +39,15 @@ steps:
           - isEmpty
           - ternaryResult
           - isIn
+  - name: pypyr.steps.contextsetf
+    description: you can set multiple nested levels with contextsetf
+    in:
+      contextSetf:
+        lvl1:
+          lvl2:
+            lvl3: '{arb3}'
+  - name: pypyr.steps.debug
+    in:
+      debug:
+        keys:
+          - lvl1
