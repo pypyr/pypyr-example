@@ -1,0 +1,24 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr glob
+steps:
+  - name: pypyr.steps.glob
+    in:
+      glob: ./**/*.py
+  - name: pypyr.steps.debug
+    in:
+      debug:
+        keys: globOut
+  - name: pypyr.steps.echo
+    foreach: '{globOut}'
+    in:
+      echoMe: iterating over paths found in glob. this is {i}
+  - name: pypyr.steps.glob
+    comment: combine multiple globs into single result
+    in:
+      glob:
+        - ./**/*.py
+        - ./**/*r.yaml
+  - name: pypyr.steps.debug
+    in:
+      debug:
+        keys: globOut
