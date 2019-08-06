@@ -1,5 +1,5 @@
 # To execute this pipeline, from repo directory shell something like:
-# pypyr debug
+# pypyr debug --log 20
 steps:
   - name: pypyr.steps.debug
     description: print a single key
