@@ -13,6 +13,6 @@ def run_step(context):
     """Run code in here. This shows you code a custom pipeline step."""
     logger.debug("started")
 
-    logger.info("This is an arbitrary step that isn't in a package.")
+    logger.notify("This is an arbitrary step that isn't in a package.")
 
     logger.debug("done")

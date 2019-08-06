@@ -16,6 +16,7 @@ def run_step(context):
     """Run code in here. This shows you how to code a custom pipeline step."""
     logger.debug("started")
 
-    logger.info("you prob want to do something useful here. . .")
+    logger.info("you'll see me if log level is 20 or lower.")
+    logger.notify("you prob want to do something useful here. . .")
 
     logger.debug("done")
