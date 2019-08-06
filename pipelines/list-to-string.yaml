@@ -1,0 +1,7 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr list-to-string
+steps:
+  - name: pypyr.steps.echo
+    in:
+      lst: [a,b,c]
+      echoMe: this is a list {lst} in str form
