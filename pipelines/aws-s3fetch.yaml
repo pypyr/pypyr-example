@@ -1,7 +1,7 @@
 # WARNING: Using aws costs money. This script does not delete any resources it
 # creates - if you don't want surprise bills, you need to delete these yourself.
 # To execute this pipeline, from repo directory shell something like:
-# pypyr aws-s3fetch "bucket=myuniquebucketname"
+# pypyr aws-s3fetch bucket=myuniquebucketname
 # Obviously set myuniquebucketname to a bucket to which your user account has
 # write permissions.
 # The echo step in each instance just uses the echoMe value that's set in the

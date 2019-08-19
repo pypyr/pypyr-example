@@ -1,0 +1,20 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr jump
+steps:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: this is the 1st step of steps
+  - name: pypyr.steps.jump
+    in:
+      jump: arbgroup
+  - name: pypyr.steps.echo
+    in:
+     echoMe: You WON'T see me because we jumped.
+arbgroup:
+    - name: pypyr.steps.echo
+      in:
+        echoMe: this is arb group
+    - pypyr.steps.stopstepgroup
+    - name: pypyr.steps.echo
+      in:
+        echoMe: if you see me something is WRONG.

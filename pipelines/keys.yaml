@@ -1,0 +1,9 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr commas --log 20
+# OR
+# pypyr commas a b c --log 20
+# OR
+# pypyr keys "a " " b" 'c' --log 20
+context_parser: pypyr.parser.keys
+steps:
+  - pypyr.steps.debug

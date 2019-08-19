@@ -1,0 +1,20 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr stop-stepgroup
+steps:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: this is the 1st step of steps
+  - name: pypyr.steps.call
+    in:
+      call: arbgroup
+  - name: pypyr.steps.echo
+    in:
+     echoMe: You'll see me because only arbgroup was stopped.
+arbgroup:
+    - name: pypyr.steps.echo
+      in:
+        echoMe: this is arb group
+    - pypyr.steps.stopstepgroup
+    - name: pypyr.steps.echo
+      in:
+        echoMe: if you see me something is WRONG.

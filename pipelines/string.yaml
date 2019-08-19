@@ -1,0 +1,11 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr string --log 20
+# OR
+# pypyr string a b c --log 20
+# OR
+# pypyr string "a " " b" 'c' --log 20
+# OR
+# pypyr string "a b  b c" --log 20
+context_parser: pypyr.parser.string
+steps:
+  - pypyr.steps.debug

@@ -1,7 +1,7 @@
 # This is part of a recursion demo where a parent and a child call each other
 # recursively.
 # Run the parent as entry point:
-# pypyr pype-recursion 'counter=0'
+# pypyr pype-recursion counter=0
 context_parser: pypyr.parser.keyvaluepairs
 steps:
   - name: pypyr.steps.echo
