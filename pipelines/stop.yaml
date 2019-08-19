@@ -1,0 +1,14 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr stop
+# this pipeline calls the pipeline stop-child.yaml
+steps:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: this is step1
+  - name: pypyr.steps.pype
+    in:
+      pype:
+        name: stop-child
+  - name: pypyr.steps.echo
+    in:
+     echoMe: if you see me something is WRONG

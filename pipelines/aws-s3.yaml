@@ -3,7 +3,7 @@
 # WARNING: Will be working with ./out dir - if you have anything in there you
 # want to keep or not potentially overwrite, don't run this.
 # To execute this pipeline, from repo directory shell something like:
-# pypyr aws-s3 "bucket=myuniquebucketname"
+# pypyr aws-s3 bucket=myuniquebucketname
 # Obviously set myuniquebucketname to a bucket to which your user account has
 # write permissions.
 context_parser: pypyr.parser.keyvaluepairs

@@ -1,0 +1,36 @@
+# pypyr step-groups a b c d --groups sg1 sg3 sg2 --success printlist
+# or, same thing:
+# pypyr --groups sg1 sg3 sg2 --success printlist step-groups a b c d
+context_parser: pypyr.parser.list
+sg1:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: sg1.1
+  - name: pypyr.steps.echo
+    in:
+      echoMe: sg1.2
+sg2:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: sg2.1
+  - name: pypyr.steps.echo
+    in:
+      echoMe: sg2.2
+sg3:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: sg3.1
+  - name: pypyr.steps.echo
+    in:
+      echoMe: sg3.2
+sg4:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: sg4.1
+  - name: pypyr.steps.echo
+    in:
+      echoMe: sg4.2
+printlist:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: '{argList}'

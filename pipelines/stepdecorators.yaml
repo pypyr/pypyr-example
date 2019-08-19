@@ -1,5 +1,5 @@
 # To execute this pipeline, from repo directory shell something like:
-# pypyr stepdecorators "isRetry=true,isDebug=true,isDebug=1,ignoreError=True"
+# pypyr stepdecorators isRetry=true isDebug=true isDebug=1 ignoreError=True
 # Notice how the isRetry flag is used to influence whether certain steps run in the pipeline
 context_parser: pypyr.parser.keyvaluepairs
 steps:

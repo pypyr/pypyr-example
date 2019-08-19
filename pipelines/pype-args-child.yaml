@@ -1,0 +1,6 @@
+# This pipeline is called from a parent pipeline pype-args
+steps:
+  - pypyr.steps.debug # you'll only see debug if --log <= 20
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'inside child. {a}: {b}. {c}'

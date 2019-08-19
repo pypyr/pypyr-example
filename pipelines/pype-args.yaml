@@ -1,0 +1,21 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr pype-args
+# This pipeline invokes a child pipeline, pype-args-child.
+steps:
+  - name: pypyr.steps.echo
+    in:
+      fromParent: 'this was set in parent args'
+      echoMe: starting parent pipeline
+  - name: pypyr.steps.pype
+    foreach: ['apple', 'pear', 'banana']
+    in:
+      pype:
+        name: pype-args-child # this will run pipelines/pype--args-child.yaml
+        args:
+          a: a value
+          b: '{i}'
+          c: '{fromParent}'
+  - name: pypyr.steps.echo
+    in: # {fromChild} was set in child, and {fromParent} was updated in child from 11 to 22.'
+      echoMe: back in parent.
+  - pypyr.steps.debug # you'll only see debug if --log <= 20

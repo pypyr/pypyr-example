@@ -5,8 +5,8 @@
 # And to run with isCi:
 # pypyr defaultarg isCI
 # And to run with both Retry and CI:
-# pypyr defaultarg isCI,isRetry
-context_parser: pypyr.parser.commas
+# pypyr defaultarg isCI isRetry
+context_parser: pypyr.parser.keys
 steps:
   - name: pypyr.steps.default
     in:

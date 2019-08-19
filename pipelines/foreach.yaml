@@ -1,5 +1,5 @@
 # To execute this pipeline, from repo directory shell something like:
-# pypyr foreach "eggs,bacon,ham"
+# pypyr foreach eggs bacon ham
 context_parser: pypyr.parser.list
 steps:
   - name: pypyr.steps.echo
