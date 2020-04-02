@@ -14,4 +14,4 @@
                   raise KeyError('this will retry')
     - name: pypyr.steps.echo
       in:
-        echoMe: you'll see me only after the previous cmd exits its retries by completing without error.
+        echoMe: you'll see me only after the previous cmd exits its retries by completing without error. which it doesn't, so you won't.

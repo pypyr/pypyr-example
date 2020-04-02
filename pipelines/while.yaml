@@ -29,8 +29,8 @@ steps:
       max: 2
       stop: '{stopWhenImTrue}'
   - name: pypyr.steps.echo
-    description: if stop condition True before loop condition, loop won't run at all
+    description: if max is 0, loop won't run at all
     in:
       echoMe: if you see me, something went wrong, because stop was True before loop started!
     while:
-      stop: True
+      max: 0

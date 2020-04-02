@@ -2,7 +2,7 @@
 # pypyr while-exhaust maxreached
 # or
 # pypyr while-exhaust stopnevertrue
-context_parser: pypyr.parser.commas
+context_parser: pypyr.parser.keys
 steps:
   - name: pypyr.steps.default
     in:
