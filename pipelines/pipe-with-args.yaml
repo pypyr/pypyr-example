@@ -1,0 +1,11 @@
+# ./pipe-with-args.yaml
+# To execute this pipeline, shell something like:
+# pypyr pipe-with-args akey=avalue anotherkey="another arbitrary value"
+context_parser: pypyr.parser.keyvaluepairs
+steps:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: this is akey's value {akey}. It came from the cli args.
+  - name: pypyr.steps.cmd
+    in:
+      cmd: echo we can inject {anotherkey} into your cmd
