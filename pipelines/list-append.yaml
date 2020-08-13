@@ -1,0 +1,21 @@
+# save as ./list-append.yaml
+# pypyr --log 20 list-append
+steps:
+  - name: pypyr.steps.py
+    while:
+      max: 5
+    in:
+      myList: ['a', 'b', 'c']
+      pycode: context['myList'].append(context['whileCounter'])
+  - name: pypyr.steps.debug
+    in:
+      debug:
+        keys: myList
+  - name: pypyr.steps.contextsetf
+    in:
+      contextSetf:
+        list1-5: !py list(range(5))
+  - name: pypyr.steps.debug
+    in:
+      debug:
+        keys: list1-5
