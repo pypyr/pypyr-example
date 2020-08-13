@@ -1,0 +1,15 @@
+# ./my-first-pipeline.yaml
+# To execute this pipeline, shell something like:
+# pypyr my-first-pipeline
+steps:
+  - name: pypyr.steps.echo
+    comment: output echoMe
+    in:
+      echoMe: this is step 1
+  - name: pypyr.steps.cmd
+    comment: actually invokes any program on your system
+             the program must be available in current path
+             run any program you fancy
+             we're just running echo here
+    in:
+      cmd: echo this is step 2

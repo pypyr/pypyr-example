@@ -90,3 +90,6 @@ ENV/
 
 # arb out dir, as used by tar.yaml
 out/
+
+# editors
+.vscode/
