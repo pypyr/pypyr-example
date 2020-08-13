@@ -1,13 +1,13 @@
-###############################################
-Examples of using the pypyr cli pipeline runner
-###############################################
+#######################################
+Examples of using the pypyr task-runner
+#######################################
 
-.. image:: https://pypyr.io/images/pypyr-logo-small.png
-    :alt: pypyr-logo
-    :align: left
+.. image:: https://pypyr.io/images/2x1/pypyr-taskrunner-yaml-pipeline-automation-1200x600.1bd2401e4f8071d85bcb1301128e4717f0f54a278e91c9c350051191de9d22c0.png
+    :alt: pypyr task runner for automation pipelines
+    :align: center
 
 
-pypyr is a command line interface to run pipelines defined in yaml. These
+pypyr is a cli & api to run pipelines defined in yaml. These
 examples show you how to code your own custom steps for the pipeline processor.
 It also shows you some example pipeline definition yaml files.
 
