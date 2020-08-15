@@ -14,10 +14,10 @@
       in:
         # here splitting multi-line statements with ;
         pycode: print("py step 2"); context['arbvalue'] += 4
-    - name: pypyr.steps.contextset
+    - name: pypyr.steps.contextcopy
       description: use context values you manipulated with other steps
       in:
-        contextSet:
+        contextCopy:
           # the echo step uses echoMe, so assign arbvalue context value to
           # echoMe and the next step will then use this value.
           echoMe: 'arbvalue'

@@ -2,31 +2,20 @@
 # pypyr contextset invalue="passed from the cmd args" --log 20
 context_parser: pypyr.parser.keyvaluepairs
 steps:
-  - name: pypyr.steps.contextset
-    description: set echoMe from the input context value of invalue
-    in:
-      contextSet:
-        echoMe: invalue
-  - pypyr.steps.echo # this should echo echoMe, which now has the same value as invalue
   - name: pypyr.steps.contextsetf
-    description: contextsetf allows you to manipulate the value as you assign it.
+    comment: contextsetf allows you to manipulate the value as you assign it.
     in:
       contextSetf:
         newKey: 'XXX {invalue} XXX'
-  - name: pypyr.steps.contextset
-    description: set echoMe from the newKey value
-    in:
-      contextSet:
-        echoMe: newKey
-  - pypyr.steps.echo # this should echo echoMe, which now has the same value as XXX+invalue+XXX
   - name: pypyr.steps.contextsetf
-    description: use py strings for conditional and ternary assignments.
+    comment: use py strings for conditional and ternary assignments.
     in:
       arb1: null
       arb2: ''
-      arb3: eggymyvalue
       arb4: [1,1,2,3,5,8]
       contextSetf:
+        arb3: eggymyvalue # you can now use arb3 below in this same contextSetf step
+        fromArb: '{arb3}'
         isNull: !py arb1 is None # make a bool based on None
         isEmpty: !py bool(arb2) # use truthy, empty strings are false
         ternaryResult: !py "'eggs' if arb3 == 'eggymyvalue' else 'ham'"
@@ -35,12 +24,13 @@ steps:
     in:
       debug:
         keys:
+          - fromArb
           - isNull
           - isEmpty
           - ternaryResult
           - isIn
   - name: pypyr.steps.contextsetf
-    description: you can set multiple nested levels with contextsetf
+    comment: you can set multiple nested levels with contextsetf
     in:
       contextSetf:
         lvl1:
