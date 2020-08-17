@@ -1,0 +1,21 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr contextcopy invalue="passed from the cmd args"
+context_parser: pypyr.parser.keyvaluepairs
+steps:
+  - name: pypyr.steps.contextcopy
+    comment: copy echoMe from the input context value of invalue
+    in:
+      contextCopy:
+        echoMe: invalue
+  - pypyr.steps.echo # this should echo echoMe, which now has the same value as invalue
+  - name: pypyr.steps.contextsetf
+    comment: contextsetf allows you to manipulate the value as you assign it.
+    in:
+      contextSetf:
+        newKey: 'XXX {invalue} XXX'
+  - name: pypyr.steps.contextcopy
+    comment: copy echoMe from the newKey value
+    in:
+      contextCopy:
+        echoMe: newKey
+  - pypyr.steps.echo # this should echo echoMe, which now has the same value as XXX+invalue+XXX

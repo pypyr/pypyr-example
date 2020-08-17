@@ -7,15 +7,15 @@
 # it nice and easy.
 context_parser: pypyr.parser.yamlfile
 steps:
-  - name: pypyr.steps.contextset
+  - name: pypyr.steps.contextcopy
     in:
-      contextSet:
+      contextCopy:
         awsClientIn: helloTaskRegister
   - name: pypyraws.steps.client
     description: register task definition - will run config from helloTaskRegister in input yaml
-  - name: pypyr.steps.contextset
+  - name: pypyr.steps.contextcopy
     in:
-      contextSet:
+      contextCopy:
         awsClientIn: helloTaskRun
         awsWaitIn: helloWaiter
   - name: pypyraws.steps.client

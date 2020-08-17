@@ -24,7 +24,7 @@ steps:
     in:
       pycode: import json; print(json.dumps(context['k1'], indent=4))
   - name: pypyr.steps.contextsetf
-    description: by comparison, contextset overwrites the existing key
+    description: by comparison, contextsetf overwrites the existing key
     in:
       contextSetf:
         k1:
