@@ -22,13 +22,11 @@ steps:
               - sub list 2
   - name: pypyr.steps.assert
     in:
-      assert:
-        this: True
+      assert: True
   - name: pypyr.steps.assert
     in:
       replaceMe: True
-      assert:
-        this: '{replaceMe}'
+      assert: '{replaceMe}'
   - name: pypyr.steps.assert
     description: string substitutions - different variables resolve to same value.
     in:
@@ -69,8 +67,7 @@ steps:
   - name: pypyr.steps.assert
     description: you shall not pass!
     in:
-      assert:
-        this: '{statusValue}'
+      assert: '{statusValue}'
   - name: pypyr.steps.echo
     in:
       echoMe: if you made it this far, something went wrong.
