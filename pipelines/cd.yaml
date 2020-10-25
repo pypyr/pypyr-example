@@ -2,7 +2,7 @@
 # pypyr cd
 steps:
   - name: pypyr.steps.shell
-    description: hop one up from current working dir.
+    description: !sic hop one up from current working dir.
                  sic means won't attempt to substitute {PWD} from context.
     in:
       cmd: !sic echo ${PWD}; cd ../; echo ${PWD}
