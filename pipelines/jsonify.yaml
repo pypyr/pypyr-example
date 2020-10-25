@@ -1,0 +1,30 @@
+steps:
+  - name: pypyr.steps.contextsetf
+    in:
+      contextSetf:
+        myJsonDict: !jsonify
+          k1: v1
+          k2: 123
+          k3: False
+          k4:
+            - 1
+            - 2
+            - a: b
+              c: d
+        myJsonList: !jsonify
+            - zero
+            - one
+            - two
+        myJsonNull: !jsonify null
+        myJsonNumber: !jsonify 99
+        myJsonQuotedString: !jsonify "0123"
+        myJsonBareString: !jsonify arbitrary string
+  - name: pypyr.steps.echo
+    in:
+      echoMe: |
+        myJsonDict: {myJsonDict}
+        myJsonList: {myJsonList}
+        myJsonNull: {myJsonNull}
+        myJsonNumber: {myJsonNumber}
+        myJsonQuotedString: {myJsonQuotedString}
+        myJsonBareString: {myJsonBareString}
