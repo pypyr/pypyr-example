@@ -24,9 +24,18 @@ steps:
     in:
       assert: True
   - name: pypyr.steps.assert
+    description: if assert contains a dict with `this`, evaluates `this` as truthy
     in:
       replaceMe: True
       assert: '{replaceMe}'
+  - name: pypyr.steps.assert
+    description: setting assert to an arbitrary mapping evaluates the whole mapping as truthy.
+    in:
+      arb_dict:
+        adict: with
+        no_this: key
+        and_no: equals_key
+      assert: '{arb_dict}'
   - name: pypyr.steps.assert
     description: string substitutions - different variables resolve to same value.
     in:
