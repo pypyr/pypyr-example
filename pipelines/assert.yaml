@@ -24,10 +24,15 @@ steps:
     in:
       assert: True
   - name: pypyr.steps.assert
-    description: if assert contains a dict with `this`, evaluates `this` as truthy
+    description: evaluates `assert` as truthy
     in:
       replaceMe: True
       assert: '{replaceMe}'
+  - name: pypyr.steps.assert
+    description: pure python string truthy
+    in:
+      myString: "any arbitrary value is true truthy"
+      assert: !py bool(myString)
   - name: pypyr.steps.assert
     description: setting assert to an arbitrary mapping evaluates the whole mapping as truthy.
     in:
