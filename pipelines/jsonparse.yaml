@@ -1,0 +1,38 @@
+steps:
+  - name: pypyr.steps.contextsetf
+    comment: put hard-coded json document into pipeline context.
+            notice for both the map & the list we're directly
+            using valid json syntax.
+    in:
+      contextSetf:
+        myList: [1, 2, 3]
+        myMap: {"a": "b", "c": "d"}
+  - name: pypyr.steps.echo
+    in:
+      echoMe: |
+        just to demonstrate the hard-coded json is in the context behaving
+        as normal context items.
+        index 1 of myList: {myList[1]}
+        item 'c' in map: {myMap[c]}
+  - name: pypyr.steps.cmd
+    description: --> getting arbitrary json from curl rest api
+    in:
+      cmd:
+        run: |-
+            curl -H 'Content-Type: application/json' -X GET https://httpbin.org/json
+        save: True
+  - name: pypyr.steps.echo
+    in:
+      echoMe: "curl response string:\n{cmdOut[stdout]} "
+  - name: pypyr.steps.jsonparse
+    description: --> parsing curl response string into context
+    in:
+      jsonParse:
+        json: '{cmdOut[stdout]:ff}'
+        key: myParsedJson
+  - name: pypyr.steps.echo
+    in:
+      echoMe: |
+        the json response from the curl cmd is in context now.
+        slideshow.title: {myParsedJson[slideshow][title]}
+        arbitrary slide item: {myParsedJson[slideshow][slides][1][items][0]}

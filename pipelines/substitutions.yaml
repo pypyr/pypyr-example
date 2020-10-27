@@ -15,7 +15,7 @@ steps:
     in:
       cmd: echo {{key1}}
   - name: pypyr.steps.echo
-    description: be sure to put quotes around a format string specified in yaml if the 1st character is a {
+    description: be sure to put quotes around a format string specified in yaml if the 1st character is a curly.
     in:
       bareEchoValue: echo!
       echoMe: '{bareEchoValue}'
@@ -24,7 +24,7 @@ steps:
     in:
       cmd: echo this is the env variable $USER - ${{USER}};
   - name: pypyr.steps.echo
-    description: >
+    description: !sic
                 use a sic string not to format any {values}. Do watch the
                 use of the yaml literal with block chomping indicator |- to
                 prevent the last character in the string from being a LF.
@@ -35,7 +35,7 @@ steps:
                 "key1": "key1 value with a {curly}"
               }
   - name: pypyr.steps.echo
-    description: use a sic string not to format any {values} on one line. No need to escape further quotes.
+    description: !sic use a sic string not to format any {values} on one line. No need to escape further quotes.
     in:
       echoMe: !sic string with a {curly} with ", ' and & and double quote at end:"
   - name: pypyr.steps.echo
