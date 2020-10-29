@@ -1,0 +1,48 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr format-types --log 20
+steps:
+  - name: pypyr.steps.default
+    in:
+      defaults:
+        a_bool: True
+        an_int: 123
+        a_date: 2010-11-12
+        a_string: this is a string
+        a_list:
+          - item 1
+          - item 2
+          - item 3
+        a_map:
+          a: b
+          c: d
+  
+  - name: pypyr.steps.contextsetf
+    comment: single token expression keep target type
+    in:
+      contextSetf:
+        format_me: # each new_ item is the same type as the source
+          new_bool: '{a_bool}' # new_bool is also a bool
+          new_int: '{an_int}' # new_int is an integer
+          new_date: '{a_date}' # new_date is datetime
+          new_string: '{a_string}' # new_string is string
+          new_list: '{a_list}' # new_list is a list
+          new_map: '{a_map}' # new_map is a dict/map
+
+          # this will cast to string and NOT keep type
+          NOT_a_string: 0{an_int}4 # NOT a single token expression, contains literal + expression
+  
+  - name: pypyr.steps.echo
+    comment: multiple token expressions in same string convert to string
+    in:
+      # echoes this string: 'a string with True, 123 and this is a string'
+      echoMe: a string with {a_bool}, {an_int} and {a_string}  
+  
+  - name: pypyr.steps.contextsetf
+    comment: explicitly cast single token to a string
+    in:
+      contextSetf:
+        # my_formatted_str_from_int is string "123", not number 123
+        my_formatted_str_from_int: '{an_int!s}'
+        my_escaped_string: the doubled {{curly}} means it won't parse as a replacement token.
+  
+  - pypyr.steps.debug

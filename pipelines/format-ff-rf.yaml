@@ -1,0 +1,154 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr format-ff-rf
+steps:
+  - name: pypyr.steps.echo
+    comment: single token expression recursive format by default
+    in:
+      nested_key: 'nested value'
+      key: '{nested_key}'
+
+      echoMe: '{key}' # == 'nested value'
+
+  - name: pypyr.steps.echo
+    comment: explicitly set flat on single token expression
+    in:
+      nested_key: 'nested value'
+      key: '{nested_key}'
+
+      echoMe: '{key:ff}' # == '{nested_key}'
+
+  - name: pypyr.steps.echo
+    comment: compound token expression flat format by default
+    in:
+      nested_key: arbitrary
+      key: contains {nested_key}
+      
+      echoMe: this {key} formatted flat by default
+        #  == 'this contains {nested key} formatted flat by default'
+
+  - name: pypyr.steps.echo
+    comment: explicitly set recursive on compound expression
+    in:
+      nested_key: arbitrary result
+      key: contains {nested_key}
+
+      echoMe: this {key:rf} formatted recursively
+        # == 'this contains arbitrary result formatted recursively'
+
+  - name: pypyr.steps.echo
+    comment: format rf until no more formatting expressions
+    in:
+      k3: 'the end'
+      k2: '{k3}'
+      k1: '{k2}'
+      k0: '{k1}'
+
+      echoMe: '{k0}' # == 'the end'
+
+  - name: pypyr.steps.echo
+    comment: format rf until ff
+    in:
+      k3: 'the end'
+      k2: '{k3}' # will NOT process {k3}, because k2:ff (Flat Format)
+      k1: '{k2:ff}'
+      k0: '{k1}'
+
+      echoMe: '{k0}' # == '{k3}'
+
+  - name: pypyr.steps.echo
+    comment: explicit rf until no more formatting expressions
+    in:
+      k3: 'the end'
+      k2: '{k3}'
+      k1: '{k2}'
+      k0: '{k1}'
+
+      echoMe: 'begin {k0:rf}' # == 'begin the end'
+
+  - name: pypyr.steps.echo
+    comment: explicit rf until ff
+    in:
+      k3: 'the end'
+      k2: '{k3}' # will NOT process {k3}, because k2:ff (Flat Format)
+      k1: '{k2:ff}'
+      k0: '{k1}'
+
+      echoMe: 'begin {k0:rf}' # == 'begin {k3}'
+
+  - name: pypyr.steps.echo
+    comment: recursively format iterable objects
+    in:
+      k1: formatted A
+      k2: formatted one
+
+      my_map:
+        a: '{k1}'
+        c: d
+        e: 
+          f: g
+          h: 
+            - zero
+            - '{k2}'
+            - two
+
+      echoMe: '{my_map}'
+
+  - name: pypyr.steps.echo
+    comment: flat format iterable objects
+    in:
+      k1: formatted A
+      k2: formatted one
+
+      my_map:
+        a: '{k1}'
+        c: d
+        e: 
+          f: g
+          h: 
+            - zero
+            - '{k2}'
+            - two
+
+      echoMe: '{my_map:ff}'
+    
+  - name: pypyr.steps.contextsetf
+    comment: each assignment evaluates atomically from the top down
+    in:
+      contextSetf:
+        k3: 'the end'
+        k2: '2 {k3}' # == '2 the end'
+        k1: '1 {k2}' # == '1 2 the end'
+        k0: '0 {k1}' # == '0 1 2 the end'
+  
+  - name: pypyr.steps.echo
+    comment: use any python format mini-syntax
+    in:
+      arb_string: ABC
+      arb_number: 42
+      big_number: 12345678
+      arb_date: 2006-01-02 15:04:05
+      string_1: two
+      string_2: 'one {string_1}'
+      string_3: 'zero {string_2}'
+
+      echoMe: |
+        int: {arb_number:d}
+        hex: {arb_number:x}
+        oct: {arb_number:o}
+        bin: {arb_number:b}
+        %: {arb_number:.2%}
+        
+        left align: begin{arb_string:<6}end
+        right align: begin{arb_string:>6}end
+        center: begin{arb_string:^7}end
+
+        left pad: {arb_string:+<6}
+        right pad: {arb_string:+>6}
+        center pad: {arb_string:+^7}
+
+        thousands separator: {big_number:,}
+
+        date/time formatting: {arb_date:%A %H:%M}
+
+        rf/ff combined with other mini-format syntax
+        {string_3:rf+^14}

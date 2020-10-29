@@ -1,3 +1,5 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr jsonify
 steps:
   - name: pypyr.steps.contextsetf
     in:
@@ -28,3 +30,31 @@ steps:
         myJsonNumber: {myJsonNumber}
         myJsonQuotedString: {myJsonQuotedString}
         myJsonBareString: {myJsonBareString}
+
+  - name: pypyr.steps.contextsetf
+    comment: combine jsonify with other formatting expressions
+    in:
+      a_string: hello there
+      replace_me: 123
+      
+      contextSetf:
+        arb_payload: !jsonify
+          k1: value {a_string}
+          k2: !py hex(255)
+          k3: !sic a string with {literal} curly braces
+          k4: '{replace_me}'
+          k5: False
+  
+  - name: pypyr.steps.cmd
+    comment: post the json string to a web-server via curl
+    in:
+      cmd: |
+        curl -H 'Content-Type: application/json' -d '{arb_payload}' -X POST 'https://httpbin.org/post'
+
+  
+  - name: pypyr.steps.echo
+    comment: arb_payload contains a string with json curly braces
+             since pypyr recurses single token expressions by default,
+             use Flat Format (ff).
+    in:
+      echoMe: '{arb_payload:ff}'
