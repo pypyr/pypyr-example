@@ -21,7 +21,7 @@ steps:
       pype:
         name: pype-child
         pipeArg: fromParent='set from arg string in parent'
-        skipParse: False
+        useParentContext: True
   - name: pypyr.steps.echo
     in:
       echoMe: 'back in parent. {fromChild} was set in child, and {fromParent} was updated in child from a string to 22.'
@@ -36,8 +36,6 @@ steps:
       pype:
         name: pype-child
         pipeArg: fromParent='set from arg string in parent'
-        skipParse: False
-        useParentContext: False
   - name: pypyr.steps.echo
     in:
       echoMe: >-
