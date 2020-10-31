@@ -1,0 +1,22 @@
+steps:
+  - name: pypyr.steps.pype
+    in:
+      my_pipeline_name: dynamic-pype-child-1
+      pype:
+        name: '{my_pipeline_name}'
+  - name: pypyr.steps.default
+    in:
+      defaults:
+        lookup_table:
+          pipe2: dynamic-pype-child-2
+          pipe3: dynamic-pype-child-3
+          pipe4: dynamic-pype-child-4
+  - name: pypyr.steps.pype
+    in:
+      pype:
+        name: '{lookup_table[pipe2]}'
+  - name: pypyr.steps.pype
+    in:
+      pick_pipe: pipe3
+      pype:
+        name: !py lookup_table[pick_pipe]
