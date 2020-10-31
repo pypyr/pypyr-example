@@ -2,10 +2,11 @@
 # pypyr pype-args
 # This pipeline invokes a child pipeline, pype-args-child.
 steps:
-  - name: pypyr.steps.echo
+  - name: pypyr.steps.default
+    description: starting parent pipeline
     in:
-      fromParent: 'this was set in parent args'
-      echoMe: starting parent pipeline
+      defaults:
+        fromParent: 'this was set in parent args'
   - name: pypyr.steps.pype
     foreach: ['apple', 'pear', 'banana']
     in:

@@ -2,10 +2,11 @@
 # pypyr pype
 # This pipeline invokes a child pipeline, pype-child.
 steps:
-  - name: pypyr.steps.echo
+  - name: pypyr.steps.default
+    description: starting parent pipeline
     in:
-      fromParent: 11
-      echoMe: starting parent pipeline
+      defaults:
+        fromParent: 11
   - name: pypyr.steps.pype
     in:
       pype:
@@ -19,19 +20,22 @@ steps:
     in:
       pype:
         name: pype-child
-        pipeArg: fromParent=set from arg string in parent
+        pipeArg: fromParent='set from arg string in parent'
         skipParse: False
   - name: pypyr.steps.echo
     in:
       echoMe: 'back in parent. {fromChild} was set in child, and {fromParent} was updated in child from a string to 22.'
   - pypyr.steps.contextclearall
+  - name: pypyr.steps.contextsetf
+    in:
+      contextSetf:
+        fromParent: set in parent
   - name: pypyr.steps.pype
     description: call child pipeline again. Use the context_parser in the child to parse pipeArg instead of a context value, and also do NOT pass the parent context to the child.
     in:
-      fromParent: set in parent
       pype:
         name: pype-child
-        pipeArg: fromParent=set from arg string in parent
+        pipeArg: fromParent='set from arg string in parent'
         skipParse: False
         useParentContext: False
   - name: pypyr.steps.echo
