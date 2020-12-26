@@ -1,0 +1,21 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr foreach-mapping
+steps:
+  - name: pypyr.steps.contextsetf
+    in:
+      contextSetf:
+        my_mapping:
+          a: b
+          c: d
+
+  - name: pypyr.steps.echo
+    description: --> loop over a mapping will just return the keys
+    foreach: '{my_mapping}'
+    in:
+      echoMe: key is {i}
+
+  - name: pypyr.steps.echo
+    description: --> loop over a mapping items will return keys + values
+    foreach: !py my_mapping.items()
+    in:
+      echoMe: key is {i[0]} & value is {i[1]}
