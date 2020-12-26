@@ -56,12 +56,12 @@ steps:
   - name: pypyr.steps.py
     description: deliberately throw an error. swallow will ignore that error and keep processing.
     in:
-      pycode: raise ValueError('arb error here. this will be swallowed.')
+      py: raise ValueError('arb error here. this will be swallowed.')
     swallow: True
   - name: pypyr.steps.py
     description: deliberately throw an error. swallow will ignore from formatted context value.
     in:
-      pycode: raise ValueError('arb error here. this will be swallowed if ignoreError is True.')
+      py: raise ValueError('arb error here. this will be swallowed if ignoreError is True.')
     swallow: '{ignoreError}'
   - name: pypyr.steps.echo
     in:

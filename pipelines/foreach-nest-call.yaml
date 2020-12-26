@@ -1,0 +1,21 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr foreach-nest-call
+steps:
+  - name: pypyr.steps.call
+    foreach: ['A', 'B', 'C']
+    in:
+      call: looping_group
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: done!
+
+looping_group:
+  - name: pypyr.steps.contextsetf
+    in:
+      contextSetf:
+        current_parent_iterator: '{i}'
+  - name: pypyr.steps.echo
+    foreach: ['one', 'two', 'three']
+    in:
+      echoMe: '{current_parent_iterator}.{i}'

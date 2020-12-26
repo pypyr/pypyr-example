@@ -1,0 +1,31 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr pystring-exists
+steps:
+  - name: pypyr.steps.default
+    description: set some arbitrary values in context
+    in:
+      defaults:
+        breakfastList: ['eggs', 'spam', 'bacon']
+        thisIsAnInt: 5
+        thisIsABool: True
+        thisIsAnotherBool: False
+  
+  - name: pypyr.steps.echo
+    run: !py "'breakfastList' in vars()"
+    in:
+      echoMe: 1. you will see me only if breakfastList exists
+
+  - name: pypyr.steps.echo
+    run: !py "'thisIsAnInt' in dir()"
+    in:
+      echoMe: 2
+  
+  - name: pypyr.steps.echo
+    run: !py "'thisIsABool' in locals()"
+    in:
+      echoMe: 3
+
+  - name: pypyr.steps.echo
+    run: !py "'thisIsAnotherBool' in globals()"
+    in:
+      echoMe: 4

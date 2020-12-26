@@ -1,24 +1,62 @@
 # To execute this pipeline, from repo directory shell something like:
 # pypyr py
   steps:
+    - name: pypyr.steps.contextsetf
+      comment: set arb context to manipulate in the next step
+      in:
+        contextSetf:
+          existing_key: existing value
+          existing_dict:
+            a: a value
+            b: 123
+
     - name: pypyr.steps.py
-      description: runs arb python
+      comment: arbitrary multi-line python statement
       in:
         # multi-line statement starts with |, per yaml spec
-        pycode: |
-                  print(f"py step: {0+1}")
-                  context['arbvalue'] = 6
-                  print(context['arbvalue'])
+        py: |
+          from math import sqrt
+          
+          print(f"py step: {1+1}")
+          
+          # use imported code like sqrt from math
+          arbvalue = sqrt(1764)
+          
+          # use builtin functions like int()
+          print(int(arbvalue))
+
+          existing_key = 'updated value'
+          existing_dict['a'] = 'a value set in py step'
+          existing_dict['b'] = 456
+
+          # use builtin functions like len()
+          print(len(existing_key))
+
+          save('arbvalue', 'existing_key')
+
     - name: pypyr.steps.py
       description: context['arbvalue'] survives between steps.
       in:
         # here splitting multi-line statements with ;
-        pycode: print("py step 2"); context['arbvalue'] += 4
-    - name: pypyr.steps.contextcopy
-      description: use context values you manipulated with other steps
+        py: print("py step 3"); arbvalue += 4
+
+    - name: pypyr.steps.echo
       in:
-        contextCopy:
-          # the echo step uses echoMe, so assign arbvalue context value to
-          # echoMe and the next step will then use this value.
-          echoMe: 'arbvalue'
-    - pypyr.steps.echo # output: 10. notice mixing and matching complex and simple steps.
+        echoMe: |-
+          arbvalue is {arbvalue} and existing_key is now {existing_key}
+          you can worked with nested values too: {existing_dict[a]} - {existing_dict[b]}
+  
+    - name: pypyr.steps.py
+      comment: set context value. arbitrary use of built-in func max too.
+      in:
+        py: arbkey = max(420, 69); save('arbkey');
+
+    - name: pypyr.steps.py
+      comment: get context value
+      in:
+        py: print(arbkey)
+
+    - name: pypyr.steps.echo
+      comment: use new value in a normal formatting expression
+      in:
+        echoMe: the value of arbkey is {arbkey} and was set in a py step

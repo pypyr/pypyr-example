@@ -1,17 +1,18 @@
 # To execute this pipeline, from repo directory shell something like:
 # pypyr contextmerge
 steps:
-  - name: pypyr.steps.echo
+  - name: pypyr.steps.contextsetf
     description: relatively arbitrarily setting some context values here
     in:
-      k1:
-        k1.1: v1.1
-        k1.2:
-          k1.2.1: v1.2.1
-        k1.3: v1.3
-      k2:
-        k2.1: v2.1
-      echoMe: context set. . .
+      contextSetf:
+        k1:
+          k1.1: v1.1
+          k1.2:
+            k1.2.1: v1.2.1
+          k1.3: v1.3
+        k2:
+          k2.1: v2.1
+
   - name: pypyr.steps.contextmerge
     description: merging a nest hierarchy into a destination hierarchy
     in:
@@ -19,10 +20,12 @@ steps:
         k1:
           k1.2:
             k1.2.2: '{k2[k2.1]}'
+
   - name: pypyr.steps.py
     description: pretty print the newly merged k1 to stdout
     in:
-      pycode: import json; print(json.dumps(context['k1'], indent=4))
+      py: import json; print(json.dumps(k1, indent=4))
+
   - name: pypyr.steps.contextsetf
     description: by comparison, contextsetf overwrites the existing key
     in:
@@ -30,7 +33,10 @@ steps:
         k1:
           k1.2:
             k1.2.2: '{k2[k2.1]}'
+            
   - name: pypyr.steps.py
     description: pretty print the newly overwritten k1 to stdout
     in:
-      pycode: import json; print(json.dumps(context['k1'], indent=4))
+      py: |
+        import json
+        print(json.dumps(k1, indent=4))

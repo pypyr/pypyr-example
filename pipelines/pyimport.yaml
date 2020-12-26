@@ -1,0 +1,43 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr pyimport
+steps:
+  - name: pypyr.steps.pyimport
+    comment: any subsequent !py strings can use these objects
+    in:
+      pyImport: |
+        import itertools as itools
+        import math
+        import urllib.parse
+        
+        from pathlib import Path
+        from fractions import Fraction as myfraction
+        
+  - name: pypyr.steps.contextsetf
+    run: !py math.sqrt(1764) == 42
+    in:
+      contextSetf:
+        my_number: 1764
+        my_url: http://arbhost/blah
+        my_filename: file
+
+        math_result: !py math.sqrt(my_number)
+        url_host: !py urllib.parse.urlparse(my_url).netloc
+        path_out: !py Path('dir', 'subdir', my_filename).with_suffix('.ext')
+        fraction_denominator: !py myfraction(1, 3).denominator
+
+  - pypyr.steps.debug
+
+  - name: pypyr.steps.pyimport
+    comment: import custom modules relative to your working dir
+             this will look for arb_function in ./mydir/mymodule.py
+    in:
+      pyImport: from mydir.mymodule import arb_function
+
+  - name: pypyr.steps.echo
+    comment: you can use arb_function anywhere you can use a formatting expression
+    in:
+      echoMe: !py arb_function('input from pipeline here')
+
+  - name: pypyr.steps.py
+    in:
+      pycode: print(context._pystring_globals)

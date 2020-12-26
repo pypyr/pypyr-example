@@ -6,13 +6,14 @@ steps:
   - name: pypyr.steps.py
     description: use a nested list in the source yaml
     in:
-      pycode: print(context['key4']['k42'][1])
+      py: print(key4['k42'][1])
   - name: pypyr.steps.py
     description: type int is parsed as numeric from yaml
     in:
-      pycode: print(context['key4']['k44'] + 3)
+      py: print(key4['k44'] + 3)
   - name: pypyr.steps.py
     description: type int is parsed as numeric from yaml. >- escapes the next line without adding a newline.
     in:
-      pycode: >-
-            if context['key4']['k43']: print('k43 is true alright')
+      py: >-
+        if key4['k43']:
+          print('k43 is true alright')

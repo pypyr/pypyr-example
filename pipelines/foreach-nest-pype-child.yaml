@@ -1,0 +1,10 @@
+# called from foreach-nest-pype-parent
+steps:
+  - name: pypyr.steps.contextsetf
+    in:
+      contextSetf:
+        current_parent_iterator: '{i}'
+  - name: pypyr.steps.echo
+    foreach: ['one', 'two', 'three']
+    in:
+      echoMe: '{current_parent_iterator}.{i}'

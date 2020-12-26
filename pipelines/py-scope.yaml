@@ -1,0 +1,114 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr py-scope
+steps:
+  - name: pypyr.steps.contextsetf
+    in:
+      contextSetf:
+        existing_value: 123
+        existing_list: ['one', 'two', 'three']
+        existing_dict:
+          a: a value
+          b: b value
+
+  - name: pypyr.steps.py
+    comment: context keys are available as variables of the same name
+    in:
+      py: |
+        # immutable types re-assignment is local to the current step
+        existing_value = max(420, 69)
+
+        existing_list[0] = 'mutable types will update'
+
+        existing_dict['a'] = 'mutable types will update'
+
+
+  - pypyr.steps.debug
+
+  - name: pypyr.steps.py
+    in:
+      py: |
+        a = 1
+        b = 2
+
+        # save a & and create c in context.
+        save('a', c=b)
+
+  - name: pypyr.steps.echo
+    comment: can use the new context values as normal in subsequent steps.
+    in:
+      echoMe: We set {a} and {c} in the previous step.
+              There is no b in context because it wasn't saved.
+
+
+  - name: pypyr.steps.py
+    comment: create re-usable functions & classes
+    in:
+      py: |
+        class MyClass():
+          attribute = 'my class!'
+
+          def do_thing(self, my_arg):
+            return my_arg + 1
+
+        
+        def my_function(arg1, arg2):
+          return arg1 + arg2
+
+
+        # call your function like you normally do
+        result = my_function(420, 69)
+        
+        # instantiate & use your class like usual
+        MyClass().do_thing(42069)
+
+        # save to context to use class & function in subsequent steps
+        save('my_function', 'MyClass')
+
+  - name: pypyr.steps.py
+    comment: re-using class & function previously saved to context
+    in:
+      py: |
+        my_instance = MyClass()
+        my_instance.do_thing(123)
+
+        for i in range(3):
+          my_function(i, 3)
+
+  - name: pypyr.steps.contextsetf
+    comment: re-use class & function anywhere you can use a !py string.
+    run: !py my_function(1, 2) == 3
+    in:
+      contextSetf:
+        new_key: !py MyClass().do_thing(456)
+       
+  - name: pypyr.steps.echo
+    in:
+      echoMe: new_key is {new_key}
+
+  - name: pypyr.steps.py
+    comment: using imports
+    in:
+      arb_url: http://arbhost/blah
+      py: |
+        from math import sqrt
+        import urllib.parse
+            
+        # use imported code like sqrt from math
+        arbvalue = sqrt(1764)
+            
+        # use builtin functions like int()
+        print(int(arbvalue))
+
+        host = urllib.parse.urlparse(arb_url).netloc
+
+        print(len(host))
+
+  - name: pypyr.steps.py
+    comment: import custom modules relative to your working dir
+    in:
+      py: |
+        from mydir.mymodule import arb_function
+
+        out = arb_function('my input')
+
+        print(out)

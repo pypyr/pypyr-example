@@ -11,11 +11,11 @@ steps:
       description: runs arb python
       in:
         # multi-line statement starts with |, per yaml spec
-        pycode: |
-                  print(context['counter'])
-                  context['counter']  = int(context['counter'])
-                  if context['counter'] > 2:
-                    raise ValueError('stop this recursion before it gets out of hand')
+        py: |
+          print(counter)
+          counter = int(counter)
+          if counter > 2:
+            raise ValueError('stop this recursion before it gets out of hand')
     - name: pypyr.steps.pype
       description: calling child pipeline
       in:

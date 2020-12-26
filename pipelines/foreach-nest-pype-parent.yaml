@@ -1,0 +1,12 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr foreach-nest-parent
+steps:
+  - name: pypyr.steps.pype
+    foreach: ['A', 'B', 'C']
+    in:
+      pype:
+        name: foreach-nest-pype-child
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: done!

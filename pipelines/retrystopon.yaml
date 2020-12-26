@@ -7,11 +7,11 @@
         # will stop retry on these errors. All others will carry on retry processing.
         stopOn: ['ValueError', 'pypyr.errors.ContextError']
       in:
-        pycode: |
-                if context['retryCounter'] == 3:
-                  raise ValueError('Booom!')
-                else:
-                  raise KeyError('this will retry')
+        py: |
+          if retryCounter == 3:
+            raise ValueError('Booom!')
+          else:
+            raise KeyError('this will retry')
     - name: pypyr.steps.echo
       in:
         echoMe: you'll see me only after the previous cmd exits its retries by completing without error, so as is you won't see me.

@@ -1,0 +1,32 @@
+# ./show-me-what-you-got.yaml
+context_parser: pypyr.parser.keyvaluepairs
+steps:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: o hai!
+  - name: pypyr.steps.cmd
+    in:
+      cmd: echo any cmd you like
+  - name: pypyr.steps.shell
+    in:
+      cmd: echo ninja shell power | grep '^ninja.*r$' 
+  - name: pypyr.steps.py
+    in:
+      py: print('any python you like')
+  - name: pypyr.steps.cmd
+    while:
+      max: 3
+    in:
+      cmd: echo gimme a {whileCounter}
+  - name: pypyr.steps.cmd
+    foreach: [once, twice, thrice]
+    in:
+      cmd: echo say {i}
+  - name: pypyr.steps.default
+    in:
+      defaults:
+        sayBye: False
+  - name: pypyr.steps.echo
+    run: '{sayBye}'
+    in:
+      echoMe: k bye!

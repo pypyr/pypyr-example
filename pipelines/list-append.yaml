@@ -1,12 +1,15 @@
 # save as ./list-append.yaml
 # pypyr --log 20 list-append
 steps:
+  - name: pypyr.steps.default
+    in:
+      defaults:
+        myList: ['a', 'b', 'c']
   - name: pypyr.steps.py
     while:
       max: 5
     in:
-      myList: ['a', 'b', 'c']
-      pycode: context['myList'].append(context['whileCounter'])
+      py: myList.append(whileCounter)
   - name: pypyr.steps.debug
     in:
       debug:

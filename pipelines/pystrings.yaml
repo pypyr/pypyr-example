@@ -15,13 +15,13 @@ steps:
     in:
       echoMe: you should see me because spam is in breakfastList
   - name: pypyr.steps.echo
-    description: don't run this step if int < 4
+    description: don't run this step if int < 4. 
                  no need to wrap the expression in extra quotes!
     run: !py thisIsAnInt < 5
     in:
       echoMe: if you see this something is wrong!
   - name: pypyr.steps.echo
-    description: use boolean inverse to skip step
+    description: use contrived example boolean inverse to skip step
     skip: '[py]`not thisIsABool and thisIsABool or thisIsAnInt > 6`'
     in:
       echoMe: you should see me because !thisIsABool & thisIsABool

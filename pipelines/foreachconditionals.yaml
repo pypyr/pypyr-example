@@ -19,20 +19,20 @@ steps:
     run: '{keepOnTrying}'
     skip: '{skipOnOver}'
     in:
-        pycode: |
-                  if context['i'] == 'ceiling':
-                    context['ceilingCount'] = context['ceilingCount'] + 1
-                    print("knock on ceiling")
-                  elif context['i'] == 'pipe':
-                    context['pipeCount'] = context['pipeCount'] + 1
-                    print("bang on pipe")
-                  elif context['i'] == 'keep on trying':
-                    raise ValueError("This won't run, because the run decorator evals False once the answer is no.")
+        py: |
+          if i == 'ceiling':
+            ceilingCount = ceilingCount + 1
+            print("knock on ceiling")
+          elif i == 'pipe':
+            pipeCount = pipeCount + 1
+            print("bang on pipe")
+          elif i == 'keep on trying':
+            raise ValueError("This won't run, because the run decorator evals False once the answer is no.")
 
-                  if context['ceilingCount'] == 3:
-                    print('thrice on the ceiling: skip on over!')
-                    context['skipOnOver'] = True
+          if ceilingCount == 3:
+            print('thrice on the ceiling: skip on over!')
+            skipOnOver = True
 
-                  if context['pipeCount'] == 2:
-                    print('twice on the pipe: the answer is no')
-                    context['keepOnTrying'] = False
+          if pipeCount == 2:
+            print('twice on the pipe: the answer is no')
+            keepOnTrying = False

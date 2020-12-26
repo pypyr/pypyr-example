@@ -1,0 +1,21 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr foreach-nest-flatten
+steps:
+  - name: pypyr.steps.pyimport
+    in:
+      pyImport: from itertools import product
+  
+  - name: pypyr.steps.contextsetf
+    in:
+      contextSetf:
+        list_a: ['A', 'B', 'C']
+        list_b: ['one', 'two', 'three']
+
+  - name: pypyr.steps.echo
+    foreach: !py product(list_a, list_b)
+    in:
+      echoMe: '{i[0]}.{i[1]}'
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: done!

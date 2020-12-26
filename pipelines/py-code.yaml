@@ -1,0 +1,60 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr py-code
+  steps:
+    - name: pypyr.steps.contextsetf
+      comment: set arb context to manipulate in the next step
+      in:
+        contextSetf:
+          existing_key: existing value
+          existing_dict:
+            a: a value
+            b: 123
+
+    - name: pypyr.steps.py
+      comment: runs arb python using context from previous step
+               also sets some new values in context.
+      in:
+        # multi-line statement starts with |, per yaml spec
+        pycode: |
+          import math
+
+          print(f"py step: {0+1}")
+
+          context['arbvalue'] = math.sqrt(36)
+          print(context['arbvalue'])
+
+          context['existing_key'] = 'updated value'
+          context['existing_dict']['a'] = 'a value set in py step'
+          context['existing_dict']['b'] = 456
+          context['existing_dict']['new_key'] = ['zero', 'one', 2, 'three']
+
+          print(len(context))
+    
+    - name: pypyr.steps.py
+      description: context['arbvalue'] survives between steps.
+      in:
+        # here splitting multi-line statements with ;
+        pycode: print("py step 2"); context['arbvalue'] += 4
+    
+    - name: pypyr.steps.echo
+      in:
+        echoMe: |
+          arbvalue is {arbvalue} and existing_key is now {existing_key}
+          you can worked with nested values too: {existing_dict[a]} -
+          {existing_dict[b]}
+          
+    - name: pypyr.steps.py
+      in:
+        pycode: |
+          xxx = [1, 2, 3]
+          intermediate = context['existing_key']
+          print([(x, y) for x in xxx for y in intermediate])
+          print([(x, y) for x in xxx for y in context['existing_key']])
+
+    - name: pypyr.steps.py
+      in:
+        py: |
+          xxx = [1, 2, 3]
+          yyy = existing_key
+          print([(x, y) for x in xxx for y in existing_key])
+          print([(x, y) for x in xxx for y in yyy])

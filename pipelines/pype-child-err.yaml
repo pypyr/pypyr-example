@@ -7,4 +7,4 @@
 steps:
   - name: pypyr.steps.py
     in:
-      pycode: 1/0
+      py: 1/0
