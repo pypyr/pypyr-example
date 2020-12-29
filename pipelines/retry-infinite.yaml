@@ -1,0 +1,15 @@
+# ./retry-infinite.yaml
+steps:
+  - name: pypyr.steps.assert
+    description: CTRL+C to exit
+    comment: 0 or null means infinite retry.
+             since sleep not set, will retry
+             immediately with no delay between
+             retries.
+    in:
+      assert: False
+    retry:
+      max: 0 # 0 or null means indefinitely
+  - name: pypyr.steps.echo
+    in:
+      echoMe: this won't run because the previous step always errors.

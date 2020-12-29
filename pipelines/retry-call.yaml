@@ -1,0 +1,26 @@
+# ./retry-call
+steps:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: begin
+  - name: pypyr.steps.call
+    comment: all of retry_me will retry 3X if it returns an error.
+    retry:
+      max: 3
+    in:
+      call:
+        groups: retry_me
+  - name: pypyr.steps.echo
+    in:
+      echoMe: you won't see me, because the previous step always errs.
+
+retry_me:
+    - name: pypyr.steps.echo
+      in:
+        echoMe: running retry {retryCounter}
+    - name: pypyr.steps.assert
+      in:
+        assert: False
+    - name: pypyr.steps.echo
+      in:
+        echoMe: you won't see me, because the previous step always errs.

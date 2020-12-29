@@ -1,0 +1,19 @@
+# ./retry-stopon
+# To execute this pipeline, from repo directory shell something like:
+# pypyr retry-stopon
+steps:
+  - name: pypyr.steps.py
+    description: this step will retry infinitely until the cmd does not return 
+                 an error or until a StopOn error happens.
+    retry:
+      # will stop retry on these errors. All others will carry on retry processing.
+      stopOn: ['ValueError', 'pypyr.errors.ContextError']
+    in:
+      py: |
+        if retryCounter == 3:
+          raise ValueError('this will STOP processing!')
+        else:
+          raise KeyError('this will retry')
+  - name: pypyr.steps.echo
+    in:
+      echoMe: this won't run because the previous step always errors.

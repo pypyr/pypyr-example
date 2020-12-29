@@ -1,0 +1,25 @@
+# To execute this pipeline, from repo root shell something like:
+# pypyr while-stop
+# ./while-stop.yaml
+steps:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: begin
+  - name: pypyr.steps.py
+    comment: while with a stop condition
+             the step changes the value
+             the stop condition checks for
+             on the 3rd iteration.
+    in:
+      # initialize the stop boolean here
+      stopWhenImTrue: False
+      py: |
+        print(f"this is while {whileCounter} executing like a boss.")
+        if whileCounter == 3:
+          stopWhenImTrue = True
+          save('stopWhenImTrue')
+    while:
+      stop: '{stopWhenImTrue}'
+  - name: pypyr.steps.echo
+    in:
+      echoMe: end

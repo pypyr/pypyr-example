@@ -1,0 +1,18 @@
+# ./retry-sleep.yaml
+steps:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: begin
+  - name: pypyr.steps.assert
+    comment: assert will fail until the 3rd retry.
+             will sleep 0.5s between retries.
+             on 3rd retry, step succeeds, and 
+             pypyr proceeds to next step.
+    retry:
+      max: 4
+      sleep: 0.5
+    in:
+      assert: !py retryCounter == 3
+  - name: pypyr.steps.echo
+    in:
+      echoMe: end. you'll see me only after previous step succeeds.
