@@ -1,0 +1,4 @@
+steps:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: optional c

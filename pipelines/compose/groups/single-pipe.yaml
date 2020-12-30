@@ -1,0 +1,62 @@
+# To execute this pipeline, from repo directory shell something like:
+# run just the defaults:
+# $ pypyr compose/groups/single-pipe
+# 
+# run, in order, any combination of a, b, c:
+# $ pypyr compose/groups/single-pipe a
+# $ pypyr compose/groups/single-pipe a b c
+# $ pypyr compose/groups/single-pipe c a
+# $ pypyr compose/groups/single-pipe c b a
+context_parser: pypyr.parser.list
+steps:
+  - name: pypyr.steps.call
+    comment: set default config & environment values.
+    in:
+      call: set_config
+  - name: pypyr.steps.call
+    comment: common code that runs each time
+    in:
+      call: 
+        - common_1
+        - common_2
+  - name: pypyr.steps.call
+    comment: optionally call whichever extras were set as input args
+    run: '{argList}'
+    in:
+      call: '{argList}'
+
+set_config:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: first config step
+  - name: pypyr.steps.echo
+    in:
+      echoMe: second config step
+
+common_1:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: first common step
+  - name: pypyr.steps.echo
+    in:
+      echoMe: second common step
+
+common_2:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: first common 2 step
+
+a:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: optional a
+
+b:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: optional b
+
+c:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: optional c

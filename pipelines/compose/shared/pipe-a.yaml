@@ -1,0 +1,18 @@
+# To execute this pipeline:
+# first cd into this dir
+# $ cd ./pipelines/compose/shared
+#
+# run just the defaults:
+# $ pypyr pipe-a
+
+steps:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: this is pipe A
+  - name: pypyr.steps.pype
+    in:
+      pype:
+        name: shared-stuff
+  - name: pypyr.steps.echo
+    in:
+      echoMe: done!

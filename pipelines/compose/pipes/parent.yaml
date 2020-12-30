@@ -1,0 +1,51 @@
+# To execute this pipeline:
+# first cd into this dir
+# $ cd ./pipelines/compose/pipes
+#
+# run just the defaults:
+# $ pypyr parent
+# 
+# run, in order, any combination of a, b, c:
+# $ pypyr parent a
+# $ pypyr parent a b c
+# $ pypyr parent c a
+# $ pypyr parent c b a
+context_parser: pypyr.parser.list
+steps:
+  - name: pypyr.steps.call
+    comment: set default config & environment values.
+    in:
+      call: set_config
+  - name: pypyr.steps.call
+    comment: common code that runs each time
+    in:
+      call: 
+        - common_1
+        - common_2
+  - name: pypyr.steps.pype
+    comment: optionally call whichever extra pipelines were set as input args
+    foreach: !py argList if argList else []
+    in:
+      pype:
+        name: '{i}'
+
+set_config:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: first config step
+  - name: pypyr.steps.echo
+    in:
+      echoMe: second config step
+
+common_1:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: first common step
+  - name: pypyr.steps.echo
+    in:
+      echoMe: second common step
+
+common_2:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: first common 2 step
