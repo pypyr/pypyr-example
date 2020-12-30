@@ -1,6 +1,6 @@
 # To execute this pipeline, from repo directory shell something like:
+# This pipeline invokes a child pipeline, ./pipelines/pype-args-child.yaml.
 # pypyr pype-args
-# This pipeline invokes a child pipeline, pype-args-child.
 steps:
   - name: pypyr.steps.default
     description: starting parent pipeline
@@ -8,15 +8,17 @@ steps:
       defaults:
         fromParent: 'this was set in parent args'
   - name: pypyr.steps.pype
+    comment: running w 'args' gives child fresh new context.
+             child context changes won't end up back in parent.
     foreach: ['apple', 'pear', 'banana']
     in:
       pype:
-        name: pype-args-child # this will run pipelines/pype--args-child.yaml
+        name: pype-args-child # this will run ./pype-args-child.yaml
         args:
           a: a value
           b: '{i}'
           c: '{fromParent}'
   - name: pypyr.steps.echo
-    in: # {fromChild} was set in child, and {fromParent} was updated in child from 11 to 22.'
+    in:
       echoMe: back in parent.
   - pypyr.steps.debug # you'll only see debug if --log <= 20

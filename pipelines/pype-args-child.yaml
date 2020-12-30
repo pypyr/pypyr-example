@@ -1,4 +1,8 @@
 # This pipeline is called from a parent pipeline pype-args
+# Args:
+# a (any): arbitrary input that echoes
+# b (any): arbitrary input that echoes.
+# c (any): another arbitrary input that echoes.
 steps:
   - pypyr.steps.debug # you'll only see debug if --log <= 20
   - name: pypyr.steps.echo
