@@ -24,7 +24,7 @@ steps:
         - common_2
   - name: pypyr.steps.pype
     comment: optionally call whichever extra pipelines were set as input args
-    foreach: !py argList if argList else []
+    foreach: '{argList}'
     in:
       pype:
         name: '{i}'
