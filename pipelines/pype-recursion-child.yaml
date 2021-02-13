@@ -10,7 +10,7 @@ steps:
   - name: pypyr.steps.py
     description: context['counter'] increment so can break out of recursion loop.
     in:
-      py: counter += 1
+      py: counter += 1; save('counter');
   - name: pypyr.steps.pype
     in:
       pype:

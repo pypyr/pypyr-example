@@ -16,6 +16,8 @@ steps:
           counter = int(counter)
           if counter > 2:
             raise ValueError('stop this recursion before it gets out of hand')
+
+          save('counter')
     - name: pypyr.steps.pype
       description: calling child pipeline
       in:
