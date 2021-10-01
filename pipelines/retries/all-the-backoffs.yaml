@@ -1,0 +1,181 @@
+# run me from root:
+# $ pypyr retries/all-the-backoffs groupnamehere
+# where groupnamehere is one of the step-groups below, e.g
+# fixed
+# fixed-single
+# jitter-single
+# etc.
+context_parser: pypyr.parser.string
+steps:
+  - name: pypyr.steps.call
+    run: !py argString
+    in:
+      call: '{argString}'
+
+fixed-single:
+  - name: pypyr.steps.cmd
+    comment: fixed with single float sleep
+    retry:
+      backoff: fixed
+      max: 3
+      sleep: 1.5
+    in:
+      cmd: curl xyz://manifestly-wrong-url
+
+fixed-list:
+  - name: pypyr.steps.cmd
+    comment: fixed with list sleep
+    retry:
+      max: 5
+      sleep: [0, 1, 1, 2, 3, 5]
+    in:
+      cmd: curl httpz://manifestly-wrong-url
+
+jitter-single:
+  - name: pypyr.steps.cmd
+    comment: jitter over fixed
+    retry:
+      backoff: jitter
+      max: 3
+      sleep: 1.5
+    in:
+      cmd: curl xyz://manifestly-wrong-url
+
+jitter-jrc:
+  - name: pypyr.steps.cmd
+    comment: retry 3X, sleep randomly between 2-10s on each retry.
+    retry:
+      backoff: jitter
+      max: 3
+      sleep: 10
+      jrc: 0.2
+    in:
+      cmd: curl xyz://manifestly-wrong-url
+
+jitter-list:
+  - name: pypyr.steps.cmd
+    comment: retry 7X, sleeping in turn 2, 4, 6, 8, 8, 8
+    retry:
+      backoff: jitter
+      max: 7
+      sleep: [2, 4, 6, 8]
+    in:
+      cmd: curl xyz://manifestly-wrong-url
+
+jitter-list-jrc:
+  - name: pypyr.steps.cmd
+    comment: retry 7X, sleeping in turn 2, 4, 6, 8, 8, 8
+    retry:
+      backoff: jitter
+      max: 7
+      sleep: [2, 4, 6, 8]
+      jrc: 0.1
+    in:
+      cmd: curl xyz://manifestly-wrong-url
+
+linear:
+  - name: pypyr.steps.cmd
+    comment: retry 5X, with interval between retries = (sleep * n)
+    retry:
+      backoff: linear
+      max: 5
+      sleep: 2
+    in:
+      cmd: curl httpz://manifestly-wrong-url
+
+linear-max-sleep:
+  - name: pypyr.steps.cmd
+    comment: retry 5X, with interval between retries = (sleep * n)
+    retry:
+      backoff: linear
+      max: 5
+      sleep: 3
+      sleepMax: 8.5
+    in:
+      cmd: curl httpz://manifestly-wrong-url
+
+linear-jitter:
+  - name: pypyr.steps.cmd
+    comment: retry 5X, sleep randomly between 0 and (sleep * n) on each retry
+    retry:
+      backoff: linearjitter
+      max: 5
+      sleep: 4
+    in:
+      cmd: curl httpz://manifestly-wrong-url
+
+linear-jitter-sleepmax-jrc:
+  - name: pypyr.steps.cmd
+    comment: retry 5X.
+             sleep randomly between (0.5*sleep*n) and (sleep * n) on each retry.
+             do not exceed 14s sleep.
+    retry:
+      backoff: linearjitter
+      max: 5
+      sleep: 5
+      sleepMax: 14
+      jrc: 0.5
+    in:
+      cmd: curl httpz://manifestly-wrong-url
+
+exponential:
+  - name: pypyr.steps.cmd
+    comment: retry 5X, with interval between retries growing base 2 exponential
+             sleep in seconds between retries, in turn, is - 2, 4, 8, 16. 
+    retry:
+      backoff: exponential
+      max: 5
+      sleep: 1
+    in:
+      cmd: curl httpz://manifestly-wrong-url
+
+exponential-sleep-max:
+  - name: pypyr.steps.cmd
+    comment: retry 5X, with interval between retries (2**n)*sleep).
+             do not allow sleep more than 21s.
+             sleep in seconds between retries, in turn, is - 5, 10, 20, 21.
+    retry:
+      backoff: exponential
+      max: 5
+      sleep: 2.5
+      sleepMax: 21
+    in:
+      cmd: curl httpz://manifestly-wrong-url
+
+exponential-base:
+  - name: pypyr.steps.cmd
+    comment: retry 5X, with interval between retries (3**n)*sleep).
+             do not allow sleep more than 41s.
+             sleep in seconds between retries, in turn, is - 3, 9, 27, 41.
+    retry:
+      backoff: exponential
+      max: 5
+      sleep: 1
+      sleepMax: 41
+      backoffArgs:
+        base: 3
+    in:
+      cmd: curl httpz://manifestly-wrong-url
+
+exponential-jitter:
+  - name: pypyr.steps.cmd
+    comment: retry 5X.
+             sleep randomly between 0 and ((2**n)*sleep) on each retry.
+    retry:
+      backoff: exponentialjitter
+      max: 5
+      sleep: 1
+    in:
+      cmd: curl httpz://manifestly-wrong-url
+
+exponential-jitter-jrc:
+  - name: pypyr.steps.cmd
+    comment: retry 5X.
+             sleep randomly between 0 and ((2**n)*sleep) on each retry.
+    retry:
+      backoff: exponentialjitter
+      max: 5
+      sleep: 2
+      jrc: 0.5
+    in:
+      cmd: curl httpz://manifestly-wrong-url

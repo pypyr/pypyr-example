@@ -1,0 +1,66 @@
+# run me from root:
+# $ pypyr retries/retry-shared-config
+common:
+  retry1: &commonRetryFixedList
+    sleep: [2, 4, 8]
+    max: 3
+    sleepMax: 6
+
+  retry2: &commonRetryWithSubstitutions
+    sleep: '{base3_exponential_retry[sleep]}'
+    max: '{base3_exponential_retry[max]}'
+    sleepMax: '{base3_exponential_retry[sleepMax]}'
+    jrc: '{base3_exponential_retry[jrc]}'
+    backoff: '{base3_exponential_retry[backoff]}'
+    backoffArgs:
+      base: '{base3_exponential_retry[base]}'
+
+steps:
+  - name: pypyr.steps.contextsetf
+    in:
+      contextSetf:
+        my_sleep: [2, 4, 8]
+        my_max: 3
+        my_sleep_max: 6
+  
+  - name: pypyr.steps.assert
+    retry:
+      sleep: '{my_sleep}'
+      max: '{my_max}'
+      sleepMax: '{my_sleep_max}'
+    in:
+      assert: !py retryCounter == 3
+
+  - name: pypyr.steps.assert
+    retry: *commonRetryFixedList
+    in:
+      assert: !py retryCounter == 3
+
+  - name: pypyr.steps.assert
+    retry: *commonRetryFixedList
+    in:
+      assert: !py retryCounter == 2
+
+  - name: pypyr.steps.contextsetf
+    in:
+      contextSetf:
+        base3_exponential_retry:
+          sleep: 1
+          max: 3
+          sleepMax: 8.5
+          jrc: 0.5
+          backoff: exponentialjitter
+          base: 3
+
+  - name: pypyr.steps.contextmerge
+    comment: change sleep for next retry.
+             all other retry values stay the same.
+    in:
+      contextMerge:
+        base3_exponential_retry:
+          sleep: 2
+
+  - name: pypyr.steps.assert
+    retry: *commonRetryWithSubstitutions
+    in:
+      assert: !py retryCounter == 3
