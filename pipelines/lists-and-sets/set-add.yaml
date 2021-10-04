@@ -1,0 +1,75 @@
+# to run me, from root:
+# $ pypyr lists-and-sets/set-add
+steps:
+  - name: pypyr.steps.call
+    in:
+      call: [add_single_item, set_containing_tuples, unpack_str]
+
+add_single_item:
+  - name: pypyr.steps.add
+    comment: instantiate set with name arbset with a single item in it.
+    in:
+      add:
+        set: arbset
+        addMe: one
+
+  - name: pypyr.steps.add
+    comment: add single item to arbset
+    in:
+      add:
+        set: arbset 
+        addMe: two
+
+  - name: pypyr.steps.add
+    comment: add multiple items from a list individually to arbset
+    in:
+      add:
+        set: arbset
+        addMe:
+          - three
+          - four
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'add_single_item: {arbset}'
+
+set_containing_tuples:
+  - name: pypyr.steps.add
+    comment: instantiate set with name tuples_in_set.
+             the 1st item in set is a tuple with 3 items.
+    in:
+      add:
+        set: tuples_in_sets
+        addMe: !py ('one', 'two', 'three')
+
+  - name: pypyr.steps.add
+    comment: add a tuple to arbset
+    in:
+      add:
+        set: tuples_in_sets
+        addMe: !py ('four', 'five', 'six')
+
+  - name: pypyr.steps.add
+    comment: unpack a tuple into arbset. each item added individually.
+    in:
+      add:
+        set: tuples_in_sets
+        unpack: True
+        addMe: !py ('four', 'five', 'six')
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'tuples in sets: {tuples_in_sets}'
+
+unpack_str:
+  - name: pypyr.steps.add
+    comment: unpacking a string into a set named strset
+    in:
+      add:
+        set: strset
+        unpack: True
+        addMe: one
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'unpacked string: {strset}'

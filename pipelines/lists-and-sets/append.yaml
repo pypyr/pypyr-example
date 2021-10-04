@@ -1,0 +1,81 @@
+# to run me, from root:
+# $ pypyr lists-and-sets/append
+steps:
+  - name: pypyr.steps.call
+    in:
+      call: [append_single_item, list_containing_lists, unpack_str]
+
+append_single_item:
+  - name: pypyr.steps.append
+    comment: instantiate list with name arblist with a single item in it.
+    in:
+      append:
+        list: arblist
+        addMe: one
+
+  - name: pypyr.steps.append
+    comment: add single item to arblist
+    in:
+      append:
+        list: arblist 
+        addMe: two
+
+  - name: pypyr.steps.append
+    comment: append multiple items from a list individually to arblist
+    in:
+      append:
+        list: arblist
+        unpack: True
+        addMe:
+          - three
+          - four
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'append_single_item: {arblist}'
+
+list_containing_lists:
+  - name: pypyr.steps.append
+    comment: instantiate list with name list_in_lists.
+             the 1st item is a list itself with 3 items.
+    in:
+      append:
+        list: lists_in_lists
+        addMe:
+          - one
+          - two
+          - three
+
+  - name: pypyr.steps.append
+    comment: add single item to arblist
+    in:
+      append:
+        list: lists_in_lists
+        addMe:
+          - four
+
+  - name: pypyr.steps.append
+    comment: add a list as a list inside arblist
+    in:
+      append:
+        list: lists_in_lists
+        addMe:
+          - five
+          - six
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'lists in lists: {lists_in_lists}'
+
+unpack_str:
+  - name: pypyr.steps.append
+    comment: unpacking a string
+    in:
+      append:
+        list: strlist
+        unpack: True
+        addMe: one
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'unpacked string: {strlist}'

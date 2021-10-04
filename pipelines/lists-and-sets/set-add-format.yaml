@@ -1,0 +1,23 @@
+# to run me, from root:
+# $ pypyr lists-and-sets/set-add-format
+steps:
+  - name: pypyr.steps.contextsetf
+    comment: set is nested in dict under key 'b'
+    in:
+      contextSetf:
+          arbkey: 2
+          arbvalue: 3
+          mykey:
+            a: value
+            b: !py set([1, arbkey])
+
+  - name: pypyr.steps.add
+    comment: use formatting expression for nested set
+    in:
+      add:
+        set: !py mykey['b']
+        addMe: '{arbvalue}'
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: '{mykey[b]}'
