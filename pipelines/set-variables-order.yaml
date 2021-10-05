@@ -1,0 +1,11 @@
+# to run me, from repo root:
+# $ pypyr set-variables-order --log 20
+steps:
+  - name: pypyr.steps.set
+    in:
+      set:
+        var1: one # you can now use var1 below in this same set step
+        var2: '{var1} two'
+        var3: !py var2 + ' three' # use var1 & var2 from above
+
+  - pypyr.steps.debug
