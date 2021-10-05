@@ -12,10 +12,10 @@ steps:
         from pathlib import Path
         from fractions import Fraction as myfraction
         
-  - name: pypyr.steps.contextsetf
+  - name: pypyr.steps.set
     run: !py math.sqrt(1764) == 42
     in:
-      contextSetf:
+      set:
         my_number: 1764
         my_url: http://arbhost/blah
         my_filename: file

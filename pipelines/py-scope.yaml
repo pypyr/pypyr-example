@@ -1,9 +1,9 @@
 # To execute this pipeline, from repo directory shell something like:
 # pypyr py-scope
 steps:
-  - name: pypyr.steps.contextsetf
+  - name: pypyr.steps.set
     in:
-      contextSetf:
+      set:
         existing_value: 123
         existing_list: ['one', 'two', 'three']
         existing_dict:
@@ -74,11 +74,11 @@ steps:
         for i in range(3):
           my_function(i, 3)
 
-  - name: pypyr.steps.contextsetf
+  - name: pypyr.steps.set
     comment: re-use class & function anywhere you can use a !py string.
     run: !py my_function(1, 2) == 3
     in:
-      contextSetf:
+      set:
         new_key: !py MyClass().do_thing(456)
        
   - name: pypyr.steps.echo
