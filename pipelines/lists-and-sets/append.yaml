@@ -3,7 +3,7 @@
 steps:
   - name: pypyr.steps.call
     in:
-      call: [append_single_item, list_containing_lists, unpack_str]
+      call: [append_single_item, list_containing_lists, formatting_expressions, unpack_str]
 
 append_single_item:
   - name: pypyr.steps.append
@@ -66,6 +66,32 @@ list_containing_lists:
   - name: pypyr.steps.echo
     in:
       echoMe: 'lists in lists: {lists_in_lists}'
+
+formatting_expressions:
+  - name: pypyr.steps.set
+    in:
+      set:
+        the_name: my_list
+        item1: 1
+        item2: 2
+  
+  - name: pypyr.steps.append
+    comment: use formatting expressions to specify list name and item to add.
+    in:
+      append:
+        list: '{the_name}'
+        addMe: '{item1}'
+    
+  - name: pypyr.steps.append
+    comment: use formatting expressions to specify list name and item to add.
+    in:
+      append:
+        list: '{the_name}'
+        addMe: '{item2}'
+  
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'formatting expressions: {my_list}'
 
 unpack_str:
   - name: pypyr.steps.append

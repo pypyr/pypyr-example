@@ -3,7 +3,7 @@
 steps:
   - name: pypyr.steps.call
     in:
-      call: [add_single_item, set_containing_tuples, unpack_str]
+      call: [add_single_item, formatting_expressions, duplicates, set_containing_tuples, unpacked_tuples, add_dict_to_set, unpack_str]
 
 add_single_item:
   - name: pypyr.steps.add
@@ -33,6 +33,33 @@ add_single_item:
     in:
       echoMe: 'add_single_item: {arbset}'
 
+formatting_expressions:
+  - name: pypyr.steps.set
+    comment: set here means set variable, not the set() collection type.
+    in:
+      set:
+        the_name: my_set
+        item1: 1
+        item2: 2
+
+  - name: pypyr.steps.add
+    comment: use formatting expressions to specify set name & item to add.
+    in:
+      add:
+        set: '{the_name}'
+        addMe: '{item1}'
+    
+  - name: pypyr.steps.add
+    comment: use formatting expressions to specify set name & item to add.
+    in:
+      add:
+        set: '{the_name}'
+        addMe: '{item2}'
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'formatting_expressions: {my_set}'
+
 set_containing_tuples:
   - name: pypyr.steps.add
     comment: instantiate set with name tuples_in_set.
@@ -60,6 +87,79 @@ set_containing_tuples:
   - name: pypyr.steps.echo
     in:
       echoMe: 'tuples in sets: {tuples_in_sets}'
+
+unpacked_tuples:
+  - name: pypyr.steps.add
+    comment: instantiate set with name tuples_in_set.
+             the 1st item in set is a tuple with 3 items.
+    in:
+      add:
+        set: unpacked_tuples
+        unpack: True
+        addMe: !py ('one', 'two', 'three')
+
+  - name: pypyr.steps.add
+    comment: add a tuple to arbset
+    in:
+      add:
+        set: unpacked_tuples
+        unpack: True
+        addMe: !py ('four', 'five', 'six')
+
+  - name: pypyr.steps.add
+    comment: unpack a tuple into arbset. each item added individually.
+    in:
+      add:
+        set: unpacked_tuples
+        unpack: True
+        addMe: !py ('four', 'five', 'six')
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'unpacked tuples: {unpacked_tuples}'
+
+add_dict_to_set:
+  - name: pypyr.steps.add
+    comment: instantiate set with name dict_in_set.
+    in:
+      add:
+        set: dict_in_set
+        unpack: True
+        addMe:
+          k1: v1
+          k2: v2
+
+  - name: pypyr.steps.add
+    comment: add a dict to dict_in_set.
+    in:
+      add:
+        set: dict_in_set
+        unpack: True
+        addMe:
+          k3: v3
+          k4: v4
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'dict in sets: {dict_in_set}'
+
+duplicates:
+  - name: pypyr.steps.add
+    in:
+      add:
+        set: duplicates
+        addMe: [1, 2]
+ 
+  - name: pypyr.steps.add
+    comment: 2 exists in set already, so won't add it.
+    in:
+      add:
+        set: duplicates
+        addMe: 2
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: 'duplicates: {duplicates}'
 
 unpack_str:
   - name: pypyr.steps.add
