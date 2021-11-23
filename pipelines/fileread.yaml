@@ -1,0 +1,49 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr fileread
+steps:
+  - name: pypyr.steps.fileread
+    comment: read file as text and save contents to txt1
+    in:
+      fileRead:
+        path: testfiles/text file.txt
+        key: txt1
+
+  - name: pypyr.steps.fileread
+    comment: read file as text and save contents to txt2
+    in:
+      fileRead:
+        path: testfiles/oneline.txt
+        key: txt2
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: '{txt1}'
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: from oneline text {txt2} file
+
+  - name: pypyr.steps.fileread
+    comment: read file in binary mode as bytes
+    in:
+      fileRead:
+        path: testfiles/binary
+        key: txt3
+        binary: True
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: '{txt3}'
+
+  - name: pypyr.steps.fileread
+    comment: read empty file as text and save contents to txt2
+    in:
+      fileRead:
+        path: testfiles/empty
+        key: txt4
+
+  - name: pypyr.steps.assert
+    in:
+      assert:
+        this: '{txt4}'
+        equals: ''

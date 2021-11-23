@@ -33,7 +33,7 @@ steps:
     description: set the payload inline, not from a formatting expression
     in:
       fileWriteYaml:
-        path: ./out/filewriteyaml_noformatting_out.yaml
+        path: ./out/subdir2/filewriteyaml_noformatting_out.yaml
         payload:
           key3.1:
             - True

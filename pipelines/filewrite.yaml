@@ -1,0 +1,93 @@
+# To execute this pipeline, from repo directory shell something like:
+# pypyr filewrite
+steps:
+  - name: pypyr.steps.filewrite
+    comment: note block chomping indicator on payload
+             this prevents trailing newline at end.
+    in:
+      fileWrite:
+        path: out/filewrite/filewrite-text.txt
+        payload: |-
+          this is line 1
+          this is line 2
+          and this is line 3
+
+  - name: pypyr.steps.filewrite
+    comment: this time do have a trailing newline at end
+    in:
+      fileWrite:
+        path: out/filewrite/filewrite-text-trailing-newline.txt
+        payload: |
+          this is line 1
+          this is line 2
+          and this is line 3
+
+  - name: pypyr.steps.filewrite
+    comment: if you want to add newline
+             you HAVE to wrap a single scalar in double quotes.
+    in:
+      fileWrite:
+        path: out/filewrite/filewrite-append-text.txt
+        payload: "this is line 1\n"
+
+  - name: pypyr.steps.filewrite
+    comment: append to file if it exists, else create.
+    in:
+      fileWrite:
+        path: out/filewrite/filewrite-append-text.txt
+        payload: "this is line 2\n"
+        append: True
+
+  - name: pypyr.steps.filewrite
+    comment: non-text will convert to str
+    in:
+      fileWrite:
+        path: out/filewrite/filewrite-append-text.txt
+        payload: 3
+        append: True
+
+  - name: pypyr.steps.filewrite
+    in:
+      fileWrite:
+        path: out/filewrite/filewrite-binary.bin
+        payload: !py b'imagine this is binary data+'
+        binary: True
+
+  - name: pypyr.steps.filewrite
+    in:
+      fileWrite:
+        path: out/filewrite/filewrite-binary.bin
+        payload: !py b'imaginary binary data appended to end.'
+        append: True
+        binary: True
+
+
+  - name: pypyr.steps.filewrite
+    in:
+      fileWrite:
+        path: out/filewrite/filewrite-binary-yaml-oneline.bin
+        payload: !!binary aW1hZ2luZSB0aGlzIGlzIGJpbmFyeQ==
+        binary: True
+
+  - name: pypyr.steps.filewrite
+    in:
+      fileWrite:
+        path: out/filewrite/filewrite-binary.gif
+        payload: !!binary |
+          R0lGODlhDAAMAIQAAP//9/X17unp5WZmZgAAAOfn515eXvPz7Y6OjuDg4J+fn5
+          OTk6enp56enmlpaWNjY6Ojo4SEhP/++f/++f/++f/++f/++f/++f/++f/++f/+
+          +f/++f/++f/++f/++f/++SH+Dk1hZGUgd2l0aCBHSU1QACwAAAAADAAMAAAFLC
+          AgjoEwnuNAFOhpEMTRiggcz4BNJHrv/zCFcLiwMWYNG84BwwEeECcgggoBADs=
+        binary: True
+
+  - name: pypyr.steps.set
+    in:
+      set:
+        out_path: out/filewrite/substitutions.txt
+        the_payload: I was set with a substitution expression.
+
+  - name: pypyr.steps.filewrite
+    in:
+      fileWrite:
+        path: '{out_path}'
+        payload: '{the_payload}'
