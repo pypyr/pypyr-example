@@ -1,2 +1,4 @@
 {k1} sit thee down and write
 In a book that all may {k2}
+Literal {{braces}} escape by doubling.
+{{entire line in escaped braces}}

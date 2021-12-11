@@ -1,0 +1,57 @@
+# WARNING: Will be working with ./out dir - if you have anything in there you
+# want to keep or not potentially overwrite, don't run this.
+#
+# To execute this pipeline, from repo directory shell something like:
+# pypyr toml/filewritetoml-simple
+steps:
+- name: pypyr.steps.filewritetoml
+  comment: write context payload out to toml
+  in:
+    fileWriteToml:
+      path: out/simple.toml # destination file
+      payload: # (optional) payload to write to path
+        key1: value1 # output a string
+        key2: value2
+        key3: 124 # output int
+        key4: false # output bool
+        table:
+          mylist:
+            - 1
+            - 2
+          myvalue: arb value
+
+- name: pypyr.steps.set
+  comment: set some arb values in context
+  in:
+    set:
+      arbkey: arbvalue
+      writehere: out/simple-substitutions.toml
+      writeme:
+        this: toml content
+        will: be written to
+        thepath: with substitutions like this {arbkey}.
+
+- name: pypyr.steps.filewritetoml
+  comment: write toml file from substitution expressions
+  in:
+    fileWriteToml:
+      path: '{writehere}'
+      payload: '{writeme}'
+
+- name: pypyr.steps.set
+  comment: set some arb values in context
+  in:
+    set:
+      arbkey: 123
+      arbstr: in the middle
+      filename: my-file
+
+- name: pypyr.steps.filewritetoml
+  comment: write toml file from substitution expressions
+  in:
+    fileWriteToml:
+      path: out/{filename}.toml
+      payload:
+        my_table:
+          my_number: '{arbkey}'
+          my_string: begin {arbstr} end

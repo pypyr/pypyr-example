@@ -2,7 +2,7 @@
 # want to keep or not potentially overwrite, don't run this.
 #
 # To execute this pipeline, from repo directory shell something like:
-# pypyr filewriteyaml
+# pypyr filewritetoml
 steps:
   - name: pypyr.steps.default
     description: set some arbitrary context we'll be writing to file
@@ -10,7 +10,7 @@ steps:
       defaults:
         numbervalue: 77.00
         paths:
-          outpath: ./out/filewriteyaml_formatting_out.yaml
+          outpath: ./out/filewritetoml_formatting.toml
         key1: value1
         key2: value2
         key3:
@@ -23,17 +23,19 @@ steps:
               c: d
               e: '{key1} and {key2}'
           key3.2: 'and this is the path {paths[outpath]}'
-  - name: pypyr.steps.filewriteyaml
+  
+  - name: pypyr.steps.filewritetoml
     description: set the payload and path from a formatting expression
     in:
-      fileWriteYaml:
+      fileWriteToml:
         path: '{paths[outpath]}'
         payload: '{key3}'
-  - name: pypyr.steps.filewriteyaml
+  
+  - name: pypyr.steps.filewritetoml
     description: set the payload inline, not from a formatting expression
     in:
-      fileWriteYaml:
-        path: ./out/subdir2/filewriteyaml_noformatting_out.yaml
+      fileWriteToml:
+        path: ./out/filewritetoml_noformatting_out.toml
         payload:
           key3.1:
             - True
@@ -46,27 +48,3 @@ steps:
           key3.2: 'and this is a nested value: {key3[key3.2]}'
           # notice how this is treated as a number
           key3.3: '{numbervalue}'
-  - name: pypyr.steps.filewriteyaml
-    description: write a single context key
-    in:
-      fileWriteYaml:
-        path: ./out/filewriteyaml_single
-        payload: 'my string here'
-
-  - name: pypyr.steps.set
-    comment: set some arb values in context
-    in:
-      set:
-        arbkey: 123
-        arbstr: in the middle
-        filename: my-file
-
-  - name: pypyr.steps.filewriteyaml
-    comment: write toml file from substitution expressions
-    in:
-      fileWriteYaml:
-        path: out/{filename}.yaml
-        payload:
-          my_table:
-            my_number: '{arbkey}'
-            my_string: begin {arbstr} end

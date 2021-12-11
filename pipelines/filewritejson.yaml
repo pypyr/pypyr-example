@@ -46,3 +46,21 @@ steps:
           key3.2: 'and this is a nested value: {key3[key3.2]}'
           # notice how this is treated as a number
           key3.3: '{numbervalue}'
+
+  - name: pypyr.steps.set
+    comment: set some arb values in context
+    in:
+      set:
+        arbkey: 123
+        arbstr: in the middle
+        filename: my-file
+
+  - name: pypyr.steps.filewritejson
+    comment: write toml file from substitution expressions
+    in:
+      fileWriteJson:
+        path: out/{filename}.json
+        payload:
+          my_table:
+            my_number: '{arbkey}'
+            my_string: begin {arbstr} end

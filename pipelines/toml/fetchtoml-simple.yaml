@@ -1,0 +1,37 @@
+# load a toml file into pypyr context
+# use values from toml file in the pipeline
+# to run me, from repo root do:
+# $ pypyr toml/fetchtoml-simple
+steps:
+  - name: pypyr.steps.fetchtoml
+    comment: fetch toml from path
+    in:
+      fetchToml:
+        path: ./testfiles/sample.toml
+
+  # echoMe is set in the toml input file
+  - pypyr.steps.echo
+
+  - name: pypyr.steps.set
+    comment: use the int from toml as a strongly typed int
+    in:
+      set:
+        intResult: !py keyInt * 2
+        key3: value3
+  
+  - name: pypyr.steps.echo
+    comment: print out result of int calculation
+    in:
+      echoMe: "strongly typed happens automatically: {intResult}"
+
+  - name: pypyr.steps.echo
+    comment: access a key in a table
+             formatting expressions in toml string will work
+    in:
+      echoMe: "{mytable[mytablekey]}"
+    
+  - name: pypyr.steps.echo
+    comment: only run if input bool is true
+    run: '{keyBool}'
+    in:
+      echoMe: you'll only see me if the bool was true

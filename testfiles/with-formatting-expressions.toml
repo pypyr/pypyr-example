@@ -1,0 +1,15 @@
+k1 = "v1"
+k3 = "{replaceMeString}"
+k4 = "{replaceMeInt}"
+k5 = "{replaceMeBool}"
+"{replaceMeKey}" = "this will replace the key"
+
+[table]
+"k2.1" = "v2.1"
+
+[table.sub]
+mylist = [
+  "2.2.1",
+  "START {replaceMeNested} END",
+  {first = "{replaceMeInline}", last = 456},
+]

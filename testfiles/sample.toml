@@ -1,0 +1,9 @@
+#this is a toml example
+echoMe = "this is a value from a toml file"
+key1 = "value1"
+key2 = "value2"
+keyBool = true
+keyInt = 123
+
+[mytable]
+mytablekey = "{key1} and {key2} and {key3}"

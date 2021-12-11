@@ -1,0 +1,37 @@
+# WARNING: Will be working with ./out dir - if you have anything in there you
+# want to keep or not potentially overwrite, don't run this.
+#
+# To execute this pipeline, from repo directory shell something like:
+# pypyr toml/fileformattoml
+steps:
+  - name: pypyr.steps.set
+    comment: set some arbitrary values in context
+    in:
+      set:
+        replaceMeString: this was replaced by pypyr
+        replaceMeInt: 420
+        replaceMeBool: false
+        replaceMeNested: doesn't matter where you are in the nesting structure
+        replaceMeKey: keyfrompypyr
+        replaceMeInline: 123
+
+  - name: pypyr.steps.fileformattoml
+    comment: read a toml file from disk, do some substitutions, write back out.
+    in:
+      fileFormatToml:
+          in: testfiles/with-formatting-expressions.toml
+          out: out/
+
+  - name: pypyr.steps.set
+    comment: set some arb values in context
+    in:
+      set:
+        myfilename: with-formatting-expressions
+        myoutputfile: out/output.toml
+
+  - name: pypyr.steps.fileformattoml
+    comment: you can set in & out entirely or partially with formatting expressions
+    in:
+      fileFormatToml:
+          in: testfiles/{myfilename}.toml
+          out: '{myoutputfile}'

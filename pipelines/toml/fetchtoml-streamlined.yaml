@@ -1,0 +1,9 @@
+# $ pypyr toml/fetchtoml-streamlined
+steps:
+  - name: pypyr.steps.fetchtoml
+    comment: fetch toml from path
+    in:
+      fetchToml: ./testfiles/sample.toml
+
+  # echoMe is set in the toml input file
+  - pypyr.steps.echo

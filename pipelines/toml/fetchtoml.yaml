@@ -1,0 +1,28 @@
+# fetch toml into the pypyr context as part of a step
+# To execute this pipeline, from repo directory shell something like:
+# pypyr toml/fetchtoml --log 20
+steps:
+  - name: pypyr.steps.fetchtoml
+    description: fetch toml from path
+    in:
+      fetchToml:
+        path: ./testfiles/sample.toml
+        
+  - pypyr.steps.debug
+  - pypyr.steps.contextclearall
+  - name: pypyr.steps.fetchtoml
+    description: fetch toml into key with path substitutions
+    in:
+      filename: 'sample'
+      keyname: 'savemehere'
+      fetchToml:
+        path: ./testfiles/{filename}.toml
+        key: '{keyname}'
+  - pypyr.steps.debug
+  - pypyr.steps.contextclearall
+  - name: pypyr.steps.fetchtoml
+    description: fetch json into key in simplified input format
+    in:
+      filename: 'sample'
+      fetchToml: ./testfiles/{filename}.toml
+  - pypyr.steps.debug
