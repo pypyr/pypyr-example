@@ -36,7 +36,7 @@ steps:
       echoMe: '{txt3}'
 
   - name: pypyr.steps.fileread
-    comment: read empty file as text and save contents to txt2
+    comment: read empty file as text and save contents to txt4
     in:
       fileRead:
         path: testfiles/empty
