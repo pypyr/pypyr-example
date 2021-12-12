@@ -47,3 +47,22 @@ steps:
       assert:
         this: '{txt4}'
         equals: ''
+  
+  - name: pypyr.steps.set
+    comment: set some arbitrary values in context
+    in:
+      set:
+        filename: text file
+        thekey: mykey
+
+  - name: pypyr.steps.fileread
+    comment: use substitution expressions for path and key
+    in:
+      fileRead:
+        path: testfiles/{filename}.txt
+        key: '{thekey}'
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: x'{mykey}'x
+  
