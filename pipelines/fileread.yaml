@@ -66,3 +66,14 @@ steps:
     in:
       echoMe: x'{mykey}'x
   
+  - name: pypyr.steps.fileread
+    comment: use substitution expressions for path and key
+    in:
+      fileRead:
+        path: testfiles/utf8.txt
+        key: utf8file
+        encoding: utf-8
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: '{utf8file}'

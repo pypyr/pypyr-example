@@ -91,3 +91,10 @@ steps:
       fileWrite:
         path: '{out_path}'
         payload: '{the_payload}'
+
+  - name: pypyr.steps.filewrite
+    in:
+      fileWrite:
+        path: out/utf8.txt
+        payload: "€ ∮ E⋅da = Q,  n → ∞, ∑ f(i) = ∏ g(i), ∀x∈ℝ: ⌈x⌉ = −⌊−x⌋, α ∧ ¬β = ¬(¬α ∨ β)"
+        encoding: utf-8
