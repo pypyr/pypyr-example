@@ -1,0 +1,9 @@
+steps:
+  - name: pypyr.steps.cmd
+    in:
+      cmd:
+        run:
+          - echo one
+          - echo two three
+        stdout: out/stdout
+        stderr: out/stderr

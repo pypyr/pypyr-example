@@ -1,0 +1,16 @@
+steps:
+  - name: pypyr.steps.py
+    in:
+      py: from datetime import datetime; print(datetime.now())
+
+  - name: pypyr.steps.cmds
+    in:
+      cmds:
+        - ./async-work.sh cmdA 1
+        - [./async-work.sh cmdB.1 1, ./async-work.sh cmdB.2 1, ./async-work.sh cmdB.3 1]
+        - [./async-work.sh cmdC.1 1, ./async-work.sh cmdC.2 1]
+
+  - name: pypyr.steps.py
+    in:
+      py: from datetime import datetime; print(datetime.now())
+    
