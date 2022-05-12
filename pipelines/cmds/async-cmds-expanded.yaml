@@ -1,0 +1,29 @@
+steps:
+  - name: pypyr.steps.py
+    in:
+      py: from datetime import datetime; print(datetime.now())
+
+  - name: pypyr.steps.cmds
+    in:
+      cmds:
+        - run:
+          - ./async-work.sh cmdA 4
+          - [./async-work.sh cmdB.1 1, ./async-work.sh cmdB.2 1, ./async-work.sh cmdB.3 1]
+          - [./async-work.sh cmdC.1 1, ./async-work.sh cmdC.2 1]
+          # - ./async-work-with-err.sh
+          cwd: .
+          save: True
+        - run:
+          - ./async-work.sh cmdAA 1
+          - [./async-work.sh cmdBB.1 1, ./async-work.sh cmdBB.2 1, ./async-work.sh cmdBB.3 1]
+          - [./async-work.sh cmdCC.1 1, ./async-work.sh cmdCC.2 1]
+          cwd: .
+          save: False
+
+  - name: pypyr.steps.py
+    in:
+      py: from datetime import datetime; print(datetime.now())
+    
+  - name: pypyr.steps.echo
+    in:
+      echoMe: '{cmdOut}'
