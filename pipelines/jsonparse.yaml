@@ -23,12 +23,12 @@ steps:
         save: True
   - name: pypyr.steps.echo
     in:
-      echoMe: "curl response string:\n{cmdOut[stdout]} "
+      echoMe: "curl response string:\n{cmdOut.stdout} "
   - name: pypyr.steps.jsonparse
     description: --> parsing curl response string into context
     in:
       jsonParse:
-        json: '{cmdOut[stdout]:ff}'
+        json: '{cmdOut.stdout:ff}'
         key: myParsedJson
   - name: pypyr.steps.echo
     in:
