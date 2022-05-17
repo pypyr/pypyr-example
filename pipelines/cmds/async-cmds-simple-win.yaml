@@ -1,0 +1,16 @@
+steps:
+  - name: pypyr.steps.py
+    in:
+      py: from datetime import datetime; print(datetime.now())
+
+  - name: pypyr.steps.cmds
+    in:
+      cmds:
+        - pwsh.exe -NoProfile .\async-work.ps1 cmdA 1
+        - [pwsh.exe -NoProfile .\async-work.ps1 cmdB.1 1, pwsh.exe -NoProfile .\async-work.ps1 cmdB.2 1, pwsh.exe -NoProfile .\async-work.ps1 cmdB.3 1]
+        - [pwsh.exe -NoProfile .\async-work.ps1 cmdC.1 1, pwsh.exe -NoProfile .\async-work.ps1 cmdC.2 1]
+
+  - name: pypyr.steps.py
+    in:
+      py: from datetime import datetime; print(datetime.now())
+    
