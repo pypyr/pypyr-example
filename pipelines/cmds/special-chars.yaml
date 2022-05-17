@@ -1,0 +1,11 @@
+steps:
+  - name: pypyr.steps.py
+    in:
+      py: from datetime import datetime; print(datetime.now())
+
+  - name: pypyr.steps.cmds
+    in:
+      cmds:
+        - pwsh.exe -NoProfile .\async-work.ps1 "\\space\ here\\" 1
+        - pwsh.exe -NoProfile .\async-work.ps1 "c:\blah\mydir w space\here\\" 1
+        - pwsh.exe -NoProfile .\async-work.ps1 "c:/blah/mydir w space/here/" 1
