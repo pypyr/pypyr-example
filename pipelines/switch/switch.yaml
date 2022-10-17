@@ -1,0 +1,50 @@
+# run me like this. from repo root:
+#
+# $pypyr switch/switch 
+# D
+#
+# $ pypyr switch/switch a
+# A
+#
+# $ pypyr switch/switch b
+# B
+#
+# $ pypyr switch/switch bc
+# B
+# C
+#
+# $ pypyr switch/switch xyz
+# D
+
+context_parser: pypyr.parser.string
+steps:
+  - name: pypyr.steps.switch
+    in:
+      switch:
+        - case: !py argString == 'a'
+          call: A
+        - case: !py argString == 'b'
+          call: B
+        - case: !py argString == 'bc'
+          call: [B, C]
+        - default: D
+
+A:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: A
+
+B:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: B
+
+C:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: C
+
+D:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: D

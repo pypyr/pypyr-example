@@ -1,0 +1,65 @@
+# run me like this. from repo root:
+#
+# $pypyr switch/switch-with-failure
+# D
+#
+# $ pypyr switch/switch-with-failure a
+# A
+# error handling stuff here
+#
+# $ pypyr switch/switch-with-failure b
+# B
+#
+# $ pypyr switch/switch-with-failure bc
+# B
+# C
+#
+# $ pypyr switch/switch-with-failure xyz
+# D
+
+context_parser: pypyr.parser.string
+steps:
+  - name: pypyr.steps.switch
+    in:
+      switch:
+        - case: !py argString == 'a'
+          call:
+            groups: A
+            failure: handle_error
+        - case: !py argString == 'b'
+          call: B
+        - case: !py argString == 'bc'
+          call: [B, C]
+        - default: D
+
+A:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: A
+  
+  - name: pypyr.steps.assert
+    comment: arbitrarily raise an error here
+    in:
+      assert: False
+
+B:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: B
+
+C:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: C
+
+D:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: D
+
+handle_error:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: error handling stuff here
+
+  - pypyr.steps.stopstepgroup
