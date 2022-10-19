@@ -1,0 +1,39 @@
+# run me like this. from repo root:
+#
+# $pypyr switch/fizzbuzz 
+steps:
+  - name: pypyr.steps.switch
+    while:
+      max: 100
+    in:
+      switch:
+        - case: !py whileCounter % 15 == 0
+          call: FizzBuzz
+
+        - case: !py whileCounter % 3 == 0
+          call: Fizz
+
+        - case: !py whileCounter % 5 == 0
+          call: Buzz
+
+        - default: just_print
+
+Fizz:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: Fizz
+
+Buzz:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: Buzz
+
+FizzBuzz:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: FizzBuzz
+
+just_print:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: '{whileCounter}'

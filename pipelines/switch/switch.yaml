@@ -2,19 +2,24 @@
 #
 # $pypyr switch/switch 
 # D
+# done!
 #
 # $ pypyr switch/switch a
 # A
+# done!
 #
 # $ pypyr switch/switch b
 # B
+# done!
 #
 # $ pypyr switch/switch bc
 # B
 # C
+# done!
 #
 # $ pypyr switch/switch xyz
 # D
+# done!
 
 context_parser: pypyr.parser.string
 steps:
@@ -28,6 +33,10 @@ steps:
         - case: !py argString == 'bc'
           call: [B, C]
         - default: D
+
+  - name: pypyr.steps.echo
+    in:
+      echoMe: done!
 
 A:
   - name: pypyr.steps.echo

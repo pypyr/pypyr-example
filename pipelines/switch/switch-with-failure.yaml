@@ -62,4 +62,5 @@ handle_error:
     in:
       echoMe: error handling stuff here
 
+  # swallow error so pipeline does not quit reporting failure
   - pypyr.steps.stopstepgroup

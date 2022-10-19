@@ -1,0 +1,40 @@
+# run me like this. from repo root:
+# $ pypyr switch/truthy
+steps:
+  - name: pypyr.steps.set
+    comment: somewhat arbitrarily set some variables in context
+    in:
+      set:
+        A: "TRUE"
+        B: False
+        D: 1 
+
+  - name: pypyr.steps.switch
+    in:
+      switch:
+        - case: '{A}'
+          call: A
+        - case: '{B}'
+          call: [B, C]
+        - case: '{D}'
+          call: D
+
+A:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: A
+
+B:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: B
+
+C:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: C
+
+D:
+  - name: pypyr.steps.echo
+    in:
+      echoMe: D
